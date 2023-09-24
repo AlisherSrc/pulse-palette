@@ -1,0 +1,15 @@
+.button {
+  font-family: DM Serif Display;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid grey;
+  border-radius:10px;
+  font-weight:800;
+  background-color: var(--ash-gray);
+  cursor: pointer;
+}

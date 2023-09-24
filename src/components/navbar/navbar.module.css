@@ -1,3 +1,21 @@
+.navbar_container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .navbar_section{
-    
+    width: 99%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar_buttons{
+    display: flex;
+    gap: 10px;
+    justify-self: flex-end;
+    align-items: center;
+    justify-content: center;
 }
