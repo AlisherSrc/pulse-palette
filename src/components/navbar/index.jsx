@@ -14,12 +14,12 @@ const Navbar = () => {
         <div className={`${styles.navbar_container}`}>
             <Link to="/"><img src={logo} alt='logo' /></Link>
             {auth ? <div className={`${styles.navbar_buttons}`}>
-                <Button medium text="Create playlist" />
-                <img src={profile_icon} alt='profile icon' />
+                <Link to="/playlist-builder"><Button medium text="Create playlist" /></Link>
+                <Link to="/profile"><img src={profile_icon} alt='profile icon' /></Link>
             </div>
                 : <div className={`${styles.navbar_buttons}`} >
-                    <Button text="Login" medium />
-                    <Button text="Sign Up" medium color="transparent" />
+                    <Link to=""><Button text="Login" medium /></Link>
+                    <Link to=""><Button text="Sign Up" medium color="transparent" /></Link>
                 </div>}
         </div>
     </nav>)

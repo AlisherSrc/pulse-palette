@@ -1,0 +1,35 @@
+.group {
+  display: flex;
+  flex-flow: column;
+
+  gap: 20px;
+}
+
+.group_text {
+    display: flex;
+
+    margin: 0 2% 0 2%;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.group_text h2 {
+    cursor: pointer;
+  font-size: 1.9rem;
+}
+
+.group_text p{
+    cursor: pointer;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 100%;
+  gap: 10px;
+}
