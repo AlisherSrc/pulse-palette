@@ -5,8 +5,7 @@ import './home.module.css';
 import cards from '../../database/cards';
 
 const Home = () => {
-    console.log(cards);
-
+    
     return (
         <>
             <div className={`${styles.home}`}>

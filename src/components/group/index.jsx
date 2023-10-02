@@ -23,7 +23,8 @@ const Group = (props) => {
 
             <div className={`${styles.cards}`}>
                 {cards.slice(0,numShowed).map((card) => (
-                    <Card imageUrl={card.imageUrl} 
+                    <Card id={card.id}
+                    imageUrl={card.imageUrl} 
                     title={card.title}
                     description={card.description}
                     key={card.id}
