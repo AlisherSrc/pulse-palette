@@ -8,29 +8,28 @@ const useFirestore = (collectionName) => {
 
     const collectionRef = collection(db,collectionName);
 
+    const getCollectionList = async (ref) => {
+        const adjustedList = [];
+
+        try {
+            const data = await getDocs(ref);
+
+            data.forEach((doc) => {
+                adjustedList.push({id: doc.id,...doc.data()});
+            })
+            setCollectionList(adjustedList);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
-        let adjustedList = [];
+        getCollectionList(collectionRef);
 
-        const getCollectionList = async () => {
-            try {
-                const data = await getDocs(collectionRef);
-
-                data.forEach((doc) => {
-                    adjustedList.push(doc.data());
-                })
-
-                setCollectionList(adjustedList);
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        getCollectionList();
     },[]);
 
-    return {collectionList,loading};
+    return [collectionList,loading,getCollectionList];
 }
 
 export default useFirestore;

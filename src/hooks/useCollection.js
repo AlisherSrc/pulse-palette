@@ -1,1 +1,0 @@
-// TO DO: Make a hook for a collection fetching to get data from document references  

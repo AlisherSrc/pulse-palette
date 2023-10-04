@@ -7,21 +7,28 @@ import useFirestore from '../../hooks/useFirestore';
 import { useEffect } from 'react';
 
 const Home = () => {
-    const {collectionList: groups,loading: loadingGroups} = useFirestore("group");
+    const [groups,loading,getCollectionList] = useFirestore("group");
+    // group{
+    // id:string
+    // title:string
+    // cards:Card[] 
+    // }
+    // groups.forEach((group) => {
 
-    groups.forEach((group) => {
-        console.log(group);
-    })
-    
+    //     console.log(group);
+    // })
 
     return (
         <>
             <div className={`${styles.home}`}>   
-                {/* {!loadingGroups ? (groups.map((group) => (
-                    <Group key={group.id} title={group.title} cards={group.playlists} numShowed={4}/>
-                ))) : <b>Loading...</b>} */}
+                {!loading ? (groups.map((group) => (
+                    
 
-                <Group title="Latest" cards={cards} numShowed={4} />
+                    <Group key={group.id} title={group.title} numShowed={4} groupID={group.id}/>
+                ))) : <b>Loading...</b>}
+                
+
+                {/* <Group title="Latest" cards={cards} numShowed={4} /> */}
             </div>
         </>
     )

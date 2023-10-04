@@ -1,18 +1,46 @@
+import { useEffect, useState } from 'react';
 import Card from '../card';
 import styles from './group.module.css';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 const Group = (props) => {
 // title: string;
 // cards: Card[];
 // numShowed: number; - number of cards showed 
 
+    const [playlists,setPlaylists] = useState([]);
+
     const {
         title,
-        cards,
-        numShowed
+        numShowed,
+        groupID
     } = props;
 
+    useEffect(() => {
+        const cards = [];
 
+        const getCards = async () => {
+            try {
+                const q = query(collection(db,"playlist"), where("groupID","==",groupID));
+
+                const querySnapshot = await getDocs(q);
+
+                querySnapshot.forEach((playlist) => {
+                    cards.push({id:playlist.id,...playlist.data()});
+                });
+
+                setPlaylists(cards);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getCards();
+    },[]);
+    
+    
 
     return (
         <div className={`${styles.group}`}>
@@ -22,12 +50,12 @@ const Group = (props) => {
             </div>
 
             <div className={`${styles.cards}`}>
-                {cards.slice(0,numShowed).map((card) => (
-                    <Card id={card.id}
-                    imageUrl={card.imageUrl} 
-                    title={card.title}
-                    description={card.description}
-                    key={card.id}
+                {playlists.length !== 0 && playlists.slice(0,numShowed).map((playlist) => (
+                    <Card id={playlist.id}
+                    imageUrl={playlist.imageUrl} 
+                    title={playlist.title}
+                    description={playlist.description}
+                    key={playlist.id}
                     />
                 ))} 
 
