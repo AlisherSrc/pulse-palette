@@ -37,18 +37,19 @@ const Playlist = () => {
 
         {songs.map((song) => (
             <div className={`${styles.audio_player}`} key={song.id}>
-                <audio controls ref={refAudio}>
+                <audio preload controls ref={refAudio}>
                     <source src={song.songFile} type="audio/mp3" />
                     Your browser does not support the audio element.
                 </audio>
 
-                <button onClick={() => refAudio.current.currentTime += 15}>Skip forward</button>
+                {refAudio && <button onClick={() => refAudio.current.currentTime += 15}>Skip forward</button>}
                 
-                <button onClick={() => refAudio.current.currentTime -= 15}>Skip backward</button>
+                {refAudio && <button onClick={() => refAudio.current.currentTime -= 15}>Skip backward</button>}
                 
-                <button onClick={() => refAudio.current.pause()}>Pause</button>
+                {refAudio && <button onClick={() => refAudio.current.pause()}>Pause</button>}
 
-                <p>{refAudio && `${Math.floor(refAudio.current.duration / 60)}:${Math.round(refAudio.current.duration - Math.floor(refAudio.current.duration / 60) * 60)}`}</p>
+                {/* Something is wrong here, it is trying to render despite refAudio being null */}
+                {/* {refAudio && `${Math.floor(refAudio.current.duration / 60)}:${Math.round(refAudio.current.duration - Math.floor(refAudio.current.duration / 60) * 60)}`} */}
             </div>
         ))}
     </div>
