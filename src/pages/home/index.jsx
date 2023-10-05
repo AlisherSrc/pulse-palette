@@ -17,16 +17,16 @@ const Home = () => {
 
     //     console.log(group);
     // })
-
+    // Need to get all playlists and filter them by public, in order to show them in the "Latest" group where all public 
+    // playlists will be displayed
     return (
         <>
             <div className={`${styles.home}`}>   
-                {!loading ? (groups.map((group) => (
+                {/* {!loading ? (groups.map((group) => (
                     
 
                     <Group key={group.id} title={group.title} numShowed={4} groupID={group.id}/>
-                ))) : <b>Loading...</b>}
-                
+                ))) : <b>Loading...</b>} */}
 
                 {/* <Group title="Latest" cards={cards} numShowed={4} /> */}
             </div>
