@@ -1,0 +1,46 @@
+.songForm {
+  display: flex;
+}
+
+.playlistFrom {
+  display: flex;
+}
+
+.builder {
+  display: flex;
+  flex-flow: column;
+
+  gap: 15px;
+}
+
+.songs {
+  display: flex;
+  flex-flow: column;
+
+  gap: 15px;
+}
+
+.songDisplayed {
+  display: flex;
+  flex-flow: column;
+}
+
+.songDisplayed__data {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.songDisplayed__data img {
+  max-width: 25%;
+  max-height: 20rem;
+
+  margin-left: 10px;
+}
+
+.songDisplayed__data audio {
+}
+.songDisplayed__data p {
+  flex: 0.3;
+  text-wrap: wrap;
+}
