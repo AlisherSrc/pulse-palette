@@ -3,6 +3,8 @@ import styles from "./playlistBuilder.module.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { generateRandomString } from "../../tools/generateRandomStr";
+
 import Button from "../../components/button";
 
 // It should display user's not uploaded songs, we can do so by the userID field of songs
@@ -22,16 +24,6 @@ const PlaylistBuilder = () => {
     const [isAudioLoading,setAudioLoading] = useState(false);
 
     const songFormRef = useRef();
-
-    const generateRandomString = (length) => {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = '';
-        const charactersLength = characters.length;
-        for (let i = 0; i < length; i++) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-    };
 
 
     const getAudioDuration = (file) => {
