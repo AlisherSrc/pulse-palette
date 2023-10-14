@@ -8,6 +8,7 @@ import Footer from './components/footer';
 import PlaylistBuilder from './pages/playlistbuilder';
 import Profile from './pages/profile';
 import Playlist from './pages/playlist';
+import Group from './pages/group'
 
 function App() {
   const router = createBrowserRouter(
@@ -17,6 +18,7 @@ function App() {
         <Route element={<PlaylistBuilder />} path='/playlist-builder'/>
         <Route element={<Profile />} path='/profile'/>
         <Route element={<Playlist />} path='/playlist/:id'/>
+        <Route element={<Group />} path='/group/:id'/>
       </Route>
     )
   )
