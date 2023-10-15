@@ -1,0 +1,75 @@
+.form_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+
+    width: 100%;
+
+}
+
+.form_container hr{
+    margin: 10px 0px;
+
+    width: 75%;
+}
+
+.form_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    gap: 15px;
+}
+
+.form_container h1{
+    margin-bottom: 2rem;
+}
+
+.form_container input[type="text"],
+.form_container input[type="password"]{
+    width: 13.5rem;
+    height: 2rem;
+
+    padding: 5px;
+}
+
+.form{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 20px;
+
+    width: 50%;
+    height: 50rem;
+    background-color: var(--ash-gray);
+}
+
+.form form{
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+}
+
+.form_block{
+    display: flex;
+    flex-flow: column;
+    gap: 2px;
+}
+
+.password{
+    display: flex;
+    position: relative;
+    gap: 15px;
+}
+
+.password input[type="button"]{
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    left: 15rem;
+}
+
+.socialSignUp{
+
+}
