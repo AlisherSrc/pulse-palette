@@ -11,13 +11,11 @@ const Group = () => {
     const [playlists, setPlaylists] = useState([]);
     const [group, setGroup] = useState(null);
     const [loading, setLoading] = useState(true);
-    const {playlists:latestPlaylists} = useGetLatestPlaylists();
+    const {playlists:latestPlaylists,loading:loadingPlaylists} = useGetLatestPlaylists();
 
 
 
     useEffect(() => {
-        setLoading(true);
-
         const docs = [];
 
         console.log(JSON.stringify(id));
@@ -25,8 +23,9 @@ const Group = () => {
         
 
         const getDocuments = async () => {
-            const q = query(collection(db,"playlist"),where("groupID",'==',id));
 
+            const q = query(collection(db,"playlist"),where("groupID",'==',id));
+            setLoading(true);
             const groupDoc = await getDoc(doc(db,"group",id))
             const playlistDocs = await getDocs(q)
 
@@ -44,11 +43,12 @@ const Group = () => {
         if(id === "Latest"){
             setPlaylists(latestPlaylists);
             setGroup({title:id});
-            setLoading(false);
+            loadingPlaylists && setLoading(false);
+            console.log(latestPlaylists, loadingPlaylists);
         }else getDocuments();
 
 
-    }, []);
+    }, [loadingPlaylists,id]);
 
 
     return (
