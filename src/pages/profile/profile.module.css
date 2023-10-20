@@ -17,16 +17,19 @@ body{
     color: #000;
 }
 .userData{
-    display:grid;
     color: #e8dfdf;
     position: relative;    
     margin-left: 4%;
+}
+.userData h1{
+    margin-top: 20%;
 }
 .userData h4{
     position: absolute;
     bottom: 0;
     right: 0;
 }
+
 .profilePart button{
     position: absolute;
     bottom: 0;

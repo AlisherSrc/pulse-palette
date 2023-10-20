@@ -12,7 +12,6 @@ const Login = () => {
     const [isPasswordShowed, setPasswordShowed] = useState(false);
 
     const login = () => {
-
     }
 
     return <>

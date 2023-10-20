@@ -7,9 +7,9 @@ import useFirestore from '../../hooks/useFirestore';
 import { useEffect, useState } from 'react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { getAuth } from 'firebase/auth';
 
 const Home = () => {
-
     const [playlists, setPlaylists] = useState([]);
 
     useEffect(() => {
@@ -39,18 +39,6 @@ const Home = () => {
         console.log(playlists);
 
     }, []);
-
-    // group{
-    // title:string
-    // groupID:string
-    // inputPlaylists
-    // }
-    // groups.forEach((group) => {
-
-    //     console.log(group);
-    // })
-    // Need to get all playlists and filter them by public, in order to show them in the "Latest" group where all public 
-    // playlists will be displayed
     return (
         <>
             <div className={`${styles.home}`}>
