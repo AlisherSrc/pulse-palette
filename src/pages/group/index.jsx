@@ -11,7 +11,7 @@ const Group = () => {
     const [playlists, setPlaylists] = useState([]);
     const [group, setGroup] = useState(null);
     const [loading, setLoading] = useState(true);
-    const {playlists:latestPlaylists,loading:loadingPlaylists} = useGetLatestPlaylists();
+    const {playlists:latestPlaylists,loading:loadingPlaylists,errorPlaylists} = useGetLatestPlaylists();
 
 
 
@@ -20,35 +20,40 @@ const Group = () => {
 
         console.log(JSON.stringify(id));
 
+        try{
+
+            const getDocuments = async () => {
+
+                const q = query(collection(db,"playlist"),where("groupID",'==',id));
+                setLoading(true);
+                const groupDoc = await getDoc(doc(db,"group",id))
+                const playlistDocs = await getDocs(q)
+    
+                
+    
+                playlistDocs.forEach((doc) => {
+                    docs.push({id: doc.id,...doc.data()});
+                })
+    
+                setGroup(groupDoc.data());
+                setPlaylists(docs);
+                setLoading(false);
+            }
+    
+            if(id === "Latest"){
+                setPlaylists(latestPlaylists);
+                setGroup({title:id});
+                !loadingPlaylists && setLoading(false);
+                console.log(latestPlaylists, loadingPlaylists);
+            }else getDocuments();
+        }catch(err){
+            console.log(err)
+        }
         
 
-        const getDocuments = async () => {
-
-            const q = query(collection(db,"playlist"),where("groupID",'==',id));
-            setLoading(true);
-            const groupDoc = await getDoc(doc(db,"group",id))
-            const playlistDocs = await getDocs(q)
-
-            
-
-            playlistDocs.forEach((doc) => {
-                docs.push({id: doc.id,...doc.data()});
-            })
-
-            setGroup(groupDoc.data());
-            setPlaylists(docs);
-            setLoading(false);
-        }
-
-        if(id === "Latest"){
-            setPlaylists(latestPlaylists);
-            setGroup({title:id});
-            loadingPlaylists && setLoading(false);
-            console.log(latestPlaylists, loadingPlaylists);
-        }else getDocuments();
 
 
-    }, [loadingPlaylists,id]);
+    }, [latestPlaylists,id,errorPlaylists]);
 
 
     return (

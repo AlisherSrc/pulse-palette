@@ -5,7 +5,8 @@ import { db } from '../config/firebase';
 const useGetLatestPlaylists = () => {
 
     const [playlists, setPlaylists] = useState([]);
-    const [loading,setLoading] = useState(false);
+    const [loading,setLoading] = useState(true);
+    const [error,setError] = useState(null);
 
     useEffect(() => {
         try {
@@ -31,6 +32,7 @@ const useGetLatestPlaylists = () => {
             getPlaylists()
         } catch (error) {
             console.log(error);
+            setError(error);
             setLoading(false);
         }
 
@@ -40,7 +42,7 @@ const useGetLatestPlaylists = () => {
     }, []);
 
 
-    return {playlists,loading};
+    return {playlists,loading,error};
 }
 
 export default useGetLatestPlaylists;

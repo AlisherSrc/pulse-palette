@@ -192,7 +192,7 @@ const PlaylistBuilder = () => {
             <div className={`${styles.songs}`}>
                 {isAudioLoading && <p>Uploading...</p>}
                 {songs.length !== 0 && songs.map((song, i) => (
-                    <div key={song.songUrl} className={`${styles.songDisplayed}`}>
+                    <div key={generateRandomString(16)} className={`${styles.songDisplayed}`}>
                         <p>{i + 1}</p>
                         <hr />
                         <div className={`${styles.songDisplayed__data}`}>
