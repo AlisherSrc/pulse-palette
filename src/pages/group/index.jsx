@@ -4,12 +4,16 @@ import { useParams } from 'react-router-dom';
 import styles from './group.module.css';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import useGetLatestPlaylists from '../../hooks/useGetLatestPlaylists';
 
 const Group = () => {
     const { id } = useParams();
     const [playlists, setPlaylists] = useState([]);
     const [group, setGroup] = useState(null);
     const [loading, setLoading] = useState(true);
+    const {playlists:latestPlaylists} = useGetLatestPlaylists();
+
+
 
     useEffect(() => {
         setLoading(true);
@@ -17,6 +21,8 @@ const Group = () => {
         const docs = [];
 
         console.log(JSON.stringify(id));
+
+        
 
         const getDocuments = async () => {
             const q = query(collection(db,"playlist"),where("groupID",'==',id));
@@ -35,7 +41,11 @@ const Group = () => {
             setLoading(false);
         }
 
-        getDocuments();
+        if(id === "Latest"){
+            setPlaylists(latestPlaylists);
+            setGroup({title:id});
+            setLoading(false);
+        }else getDocuments();
 
 
     }, []);

@@ -49,7 +49,7 @@ const Group = (props) => {
         <div className={`${styles.group}`}>
             <div className={`${styles.group_text}`}>
                 <h2>{title}:</h2>
-                <Link to={`group/${groupID}`}>show all</Link>
+                <Link to={groupID ? `group/${groupID}` :`group/${title}`}>show all</Link>
             </div>
 
             <div className={`${styles.cards}`}>
