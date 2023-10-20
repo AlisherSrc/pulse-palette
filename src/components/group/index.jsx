@@ -3,6 +3,7 @@ import Card from '../card';
 import styles from './group.module.css';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { Link } from 'react-router-dom';
 
 const Group = (props) => {
 // title: string;
@@ -48,7 +49,7 @@ const Group = (props) => {
         <div className={`${styles.group}`}>
             <div className={`${styles.group_text}`}>
                 <h2>{title}:</h2>
-                <p>show all</p>
+                <Link to={`group/${groupID}`}>show all</Link>
             </div>
 
             <div className={`${styles.cards}`}>
