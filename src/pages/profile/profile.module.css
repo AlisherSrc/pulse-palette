@@ -1,0 +1,90 @@
+body{
+    width: 100%;
+}
+.profilePart{
+    margin-left: 2%;
+    display: flex;
+    margin-top: 2%;
+    display: 37vh;
+    position: relative;
+    width: 100%;
+}
+.profilePart img{
+    height: 100%;
+}
+.playlists a{
+    text-decoration: none;
+    color: #000;
+}
+.userData{
+    display:grid;
+    color: #e8dfdf;
+    position: relative;    
+    margin-left: 4%;
+}
+.userData h4{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.profilePart button{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right:10% ;
+    background-color: #37C513;
+    color: rgb(152, 17, 17);
+    font-weight: 600;
+    width: 70px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+@media (max-width:400px) {
+    .profilePart button{
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: auto;
+    }
+}
+.list{
+    margin-top: 7%;
+    margin-left: 2%;
+    color: #e8dfdf;
+}
+.playlists{
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.playlists {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+.playlist{ /*25% width for each item to have 4 items in a row */
+    box-sizing: border-box;
+    border: 1px solid #000;
+    text-align: center;
+    border-radius: 10px;
+    height: 37vh;
+    background-color: #a49c9c;
+} 
+.playlist img{
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 65%;
+}
+.playlist h4{
+    text-align: left;
+    padding-left: 5%;
+    margin-bottom: 5%;
+    margin-top:3%;
+}
+.playlist p{
+    font-size: 70%;
+    text-align: left;
+    padding-left: 5%;
+}

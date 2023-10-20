@@ -14,7 +14,8 @@ const Group = (props) => {
     const {
         title,
         numShowed,
-        groupID
+        groupID,
+        inputPlaylists
     } = props;
 
     useEffect(() => {
@@ -37,7 +38,8 @@ const Group = (props) => {
             }
         }
 
-        getCards();
+         if(!inputPlaylists) getCards();
+         else setPlaylists(inputPlaylists);
     },[]);
     
     
