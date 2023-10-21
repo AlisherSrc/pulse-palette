@@ -65,8 +65,8 @@ const Playlist = () => {
                         </div>
                     </div>
                     <div className={`${styles.songInfo}`}>
-                        <h2>Name : {song.name}</h2>
-                        <h3>Singer : {song.singer}</h3>
+                        <h3>Name : {song.name}</h3>
+                        <h4>Singer : {song.singer}</h4>
                     </div>
                     
 
