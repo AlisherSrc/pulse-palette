@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import styles from "./playlistBuilder.module.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
 import upload_image from '../../../public/image-upload.svg';
 import upload_music from '../../../public/music-upload.svg';
@@ -89,7 +89,7 @@ const PlaylistBuilder = () => {
             imageUrl: songs[0].imageUrl,
             public: isPublic,
             title: title,
-            createdDate: Date.now(),
+            createdDate: Timestamp.now(),
             isPopular: false
             // Later we need to add a userId to it
         }).then((snapshot) => {

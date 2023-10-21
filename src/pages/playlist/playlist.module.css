@@ -1,4 +1,68 @@
+.playlistPart{
+  display: flex;
+  margin-left: 5%;
+  margin-top: 20px;
+  height: 37vh;
+  margin-bottom: 5%;
+}
+.playlistPart img {
+    width: 20%;
+    height: 100%;
+    border-radius: 10px;
+}
+.playlistText{
+    padding-left: 4%;
+}
+.playlistText h1{
+    color:#37C513;
+    margin-bottom: 10%;
+}
+.playlistText h3{
+    color: #fff;
+}
 .audio_player {
-  max-width: 400px; 
+  max-width: 80%; 
   margin: 0 auto;
+  display: flex;
+  border: 2px solid black ;
+  align-items: center;
+  margin-bottom: 1%;
+  height: 70px;
+  border-radius: 30px;
+}
+.audio_player h1{
+  margin-left: 2%;
+}
+.audioList{
+  display: block;
+}
+.audio_player img{
+  width: 10%;
+  height: 100%;
+  margin-left: 3%;
+}
+.audioManage{
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width:390px) {
+  audio{
+    width: 100%;
+  }
+  
+}
+.manage{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.songInfo{
+  margin-left: 10%;
+  display: block;
+  color: #fff;
 }

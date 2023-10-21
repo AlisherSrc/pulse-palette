@@ -9,7 +9,7 @@
   display: flex;
 
   margin: 0 2% 0 2%;
-
+  text-decoration: none;
   align-items: center;
   justify-content: space-between;
 }
@@ -18,7 +18,10 @@
   cursor: pointer;
   font-size: 1.9rem;
 }
-
+.group_text a{
+  text-decoration: none;
+  color: black;
+}
 .group_text p {
   cursor: pointer;
   font-size: 1rem;
@@ -32,4 +35,5 @@
 
   width: 100%;
   gap: 10px;
+  height: 57vh;
 }
