@@ -21,8 +21,8 @@ body{
     position: relative;    
     margin-left: 4%;
 }
-.userData h1{
-    margin-top: 20%;
+.userData h2{
+    margin-top: 10%;
 }
 .userData h4{
     position: absolute;
@@ -33,14 +33,8 @@ body{
 .profilePart button{
     position: absolute;
     bottom: 0;
-    right: 0;
-    margin-right:10% ;
-    background-color: #37C513;
-    color: rgb(152, 17, 17);
-    font-weight: 600;
-    width: 70px;
-    border-radius: 10px;
-    cursor: pointer;
+    left: 0;
+    
 }
 @media (max-width:400px) {
     .profilePart button{
@@ -71,7 +65,7 @@ body{
     border: 1px solid #000;
     text-align: center;
     border-radius: 10px;
-    height: 37vh;
+    height: 47vh;
     background-color: #a49c9c;
 } 
 .playlist img{

@@ -13,18 +13,54 @@ height: 37vh;
     padding-left: 4%;
 }
 .groupText h1{
-    color: #37C513;
+    color: #fff;
     margin-bottom: 10%;
 }
 .groupText h3{
     color: #fff;
 }
 .playlists{
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.playlists {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+.playlist{ /*25% width for each item to have 4 items in a row */
+    box-sizing: border-box;
+    border: 1px solid #000;
+    text-align: center;
+    border-radius: 10px;
+    height: 37vh;
+    background-color: #a49c9c;
+} 
+.playlist img{
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 65%;
+}
+.playlist h4{
+    text-align: left;
+    padding-left: 5%;
+    margin-bottom: 5%;
+    margin-top:3%;
+}
+.playlist p{
+    font-size: 70%;
+    text-align: left;
+    padding-left: 5%;
+}
+/* .playlists{
 display: flex;
 flex-wrap: wrap;
 }
 .playlist{
-    width: 16%; /* 25% width for each item to have 4 items in a row */
+    width: 16%; /* 25% width for each item to have 4 items in a row 
     margin: 10px;
     box-sizing: border-box;
     border: 1px solid #000;
@@ -56,4 +92,4 @@ flex-wrap: wrap;
     font-size: 70%;
     text-align: left;
     padding-left: 5%;
-}
+} */

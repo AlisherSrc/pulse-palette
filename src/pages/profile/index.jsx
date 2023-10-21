@@ -5,6 +5,8 @@ import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import {Button} from 'antd';
+
 
 const Profile = () => {
     const [isAuth, setisAuth] = useState(false);
@@ -57,10 +59,9 @@ const Profile = () => {
                     <img src="https://www.vippng.com/png/full/363-3631840_profile-icon-png-profile-icon-png-white-transparent.png" alt="" width='160px'/>
                     <div className={`${styles.userData}`}>
                         <h3>Profile</h3>
-                        <h1>Username</h1>
-                        <h4>Email: {currUser.email}</h4>
+                        <h2>Email: {currUser.email}</h2>                    
+                    <Button danger ghost onClick={signOut}>Sign Out</Button>
                     </div>
-                    <button onClick={signOut}>Sign Out</button>
                 </div>
                 <div className={`${styles.list}`}>
                     <h3>Playlists</h3>
