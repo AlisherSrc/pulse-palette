@@ -85,7 +85,9 @@ const PlaylistBuilder = () => {
             groupID: "userCreatedPlaylistGroupTest",
             imageUrl: songs[0].imageUrl,
             public: isPublic,
-            title: title
+            title: title,
+            createdDate: Date.now(),
+            isPopular: false
             // Later we need to add a userId to it
         }).then((snapshot) => console.log("Playlist " + playlistID + " created"))
             .catch((error) => console.log(error));
@@ -229,7 +231,7 @@ const PlaylistBuilder = () => {
                 <div className={`${styles.songs}`}>
                     {isAudioLoading && <p>Uploading...</p>}
                     {songs.length !== 0 && songs.map((song, i) => (
-                        <div key={song.songUrl} className={`${styles.songDisplayed}`}>
+                        <div key={key={generateRandomString(16)}} className={`${styles.songDisplayed}`}>
                             <h3>{i + 1}</h3>
                             <hr />
                             <div className={`${styles.songDisplayed__data}`}>
