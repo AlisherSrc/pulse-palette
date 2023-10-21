@@ -4,6 +4,11 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
+import upload_image from '../../../public/image-upload.svg';
+import upload_music from '../../../public/music-upload.svg';
+
+import H5AudioPlayer  from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 import Button from "../../components/button";
 
@@ -171,44 +176,91 @@ const PlaylistBuilder = () => {
 
     return (<>
         <div className={`${styles.builder}`}>
-            <p>Create your playlist</p>
-            <form className={`${styles.playlistForm}`}>
-                <input type="text" placeholder="Title" onChange={handleTitleChange} />
-                <input type="text" placeholder="Short description" onChange={handleDesChange} />
-                <label>Public</label>
-                <input type="checkbox" onChange={handlePublicChange} />
-            </form>
-            <form className={`${styles.songForm}`} ref={songFormRef} onSubmit={handleSongSubmit}>
-                <input type="text" placeholder="Audio name" onChange={handleAudioTitle} />
-                <input type="text" placeholder="Singer/Group" onChange={handleSingerChange} />
-                <label>Audio image</label>
-                <input id="audioImage" type="file" accept="image/*" placeholder="Audio image" onChange={handleImageUpload} />
-                <label>Audio file</label>
-                <input id="audioFile" type="file" accept="audio/*" onChange={handleAudioUpload} />
-                <button type="submit">Add</button>
-            </form>
-            <div className={`${styles.songs}`}>
-                {isAudioLoading && <p>Uploading...</p>}
-                {songs.length !== 0 && songs.map((song, i) => (
-                    <div key={song.songUrl} className={`${styles.songDisplayed}`}>
-                        <p>{i + 1}</p>
-                        <hr />
-                        <div className={`${styles.songDisplayed__data}`}>
-                            <p>{song.name}</p>
-                            <p>{song.singer}</p>
-                            <audio preload controls>
-                                <source src={song.songUrl} type="audio/mp3" />
-                                    Your browser does not support the audio element.
-                                
-                            </audio>
-                            <img src={song.imageUrl} />
-                        </div>
+            <div className={`${styles.builder_inner}`}>
+                <h2>Create your playlist</h2>
+                <form className={`${styles.playlistForm}`}>
+                    <input type="text" placeholder="Title" onChange={handleTitleChange} />
+                    <input type="text" placeholder="Short description" onChange={handleDesChange} />
+                    <div className={`${styles.publicCheck}`}>
+                        <label htmlFor="checkbox">Public</label>
+                        <input id="checkbox" type="checkbox" onChange={handlePublicChange} />
                     </div>
-                ))}
+                </form>
+                <form className={`${styles.songForm}`} ref={songFormRef} onSubmit={handleSongSubmit}>
+                    <div className={styles.audioMain}>
+                        <div className={`${styles.audioDescription}`}>
+                            <div className={styles.audioInfo}>
+                                <input type="text" placeholder="Audio name" onChange={handleAudioTitle} />
+                                <input type="text" placeholder="Singer/Group" onChange={handleSingerChange} />
+                            </div>
+                            <div className={styles.audioFiles}>
+                                <div className={styles.image}>
+                                    <label htmlFor="audioImage">
+                                        <img
+                                            src={upload_image}
+                                            alt="Выбрать файл"
+                                        />
+                                        <span className="input__file-button-text">Upload Audio image</span>
+                                    </label>
+                                    <div className={styles.customButton}>
+                                        <input id="audioImage" type="file" accept="image/*" onChange={handleImageUpload} />
+                                    </div>
+                                </div>
 
-                {songs.length !== 0 && console.log(songs[0].imageUrl)}
+                                <div className={styles.audio}>
+                                    <label htmlFor="audioFile">
+                                        <img
+                                            src={upload_music}
+                                            alt="Выбрать файл"
+                                        />
+                                        <span>Upload Audio file</span>
+                                    </label>
+                                    <div className={`${styles.customButton}`}>
+                                        <input id="audioFile" type="file" accept="audio/*" onChange={handleAudioUpload} />
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div className={styles.footer}>
+                        <button type="submit">Add a song</button>
+                    </div>
+                    </div>
+                </form>
+                <div className={`${styles.songs}`}>
+                    {isAudioLoading && <p>Uploading...</p>}
+                    {songs.length !== 0 && songs.map((song, i) => (
+                        <div key={song.songUrl} className={`${styles.songDisplayed}`}>
+                            <h3>{i + 1}</h3>
+                            <hr />
+                            <div className={`${styles.songDisplayed__data}`}>
+                                <img src={song.imageUrl} />
+
+                                <div className={styles.songDisplayed__data__media}>
+                                    <div className={styles.songDisplayed__data__info}>
+                                        <p className={styles.sonName}>{song.name}</p>
+                                        <p className={styles.author}>{song.singer}</p>
+                                    </div>
+                                    <div className={styles.h5Player}>
+                                        <H5AudioPlayer
+                                            className={styles.audioPlayer}
+                                            autoPlay
+                                            src={song.songUrl}
+                                            customVolumeControls={[]}
+                                        />
+                                    </div>
+                                    {/*<audio preload controls>*/}
+                                    {/*    <source src={song.songUrl} type="audio/mp3" />*/}
+                                    {/*    Your browser does not support the audio element.*/}
+                                    {/*</audio>*/}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+
+                    {songs.length !== 0 && console.log(songs[0].imageUrl)}
+                </div>
+                <Button text="Create" onClick={createPlaylist} medium />
             </div>
-            <Button text="Create" onClick={createPlaylist} medium />
         </div>
     </>)
 }
