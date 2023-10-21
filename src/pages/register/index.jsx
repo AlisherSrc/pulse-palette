@@ -32,7 +32,7 @@ const Register = () => {
         if (!username || !password || !passwordConfirm || !email) {
 
             setTimeout(() => setLoading(false),50);
-            alert("Please, fill all fields");
+            alert("Please, fill all the fields");
             return;
         }
 

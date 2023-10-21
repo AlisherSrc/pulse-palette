@@ -1,17 +1,41 @@
 import { useState } from 'react';
 import Button from '../../components/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+
 
 import styles from './login.module.css';
 
 const Login = () => {
 
     const [loading,setLoading] = useState(false);
+    const [loginLoading,setLoginLoading] = useState(false);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isPasswordShowed, setPasswordShowed] = useState(false);
+    const auth = getAuth();
+    const navigate = useNavigate();
 
-    const login = () => {
+    const login = (event) => {
+        event.preventDefault();
+        setLoginLoading(true);
+        
+        console.log(email,password);
+        if(!email || !password){
+            setTimeout(() => setLoginLoading(false),50);
+            alert("Please, fill all fields");
+            return;
+        }
+        
+        signInWithEmailAndPassword(auth,email,password).then((userCred) => {
+            console.log("Logged in!")
+            setLoginLoading(false);
+            navigate("/profile");
+        }).catch((err) => {
+            console.log(err);
+            setLoginLoading(false);
+        })
     }
 
     return <>
@@ -36,7 +60,8 @@ const Login = () => {
                                 <input type="button" value="show" onClick={() => setPasswordShowed(!isPasswordShowed)} />
                             </div>
                         </div>
-                        <Button text="Sign up" color="var(--lime-green)" width="15rem" height="2.5rem" onClick={() => login} />
+                        {!loginLoading ? <Button text="Sign up" color="var(--lime-green)" width="15rem" height="2.5rem" onClick={(e) => login(e)} />
+                        : <p>Loading...</p>}
                     </form>
                     <hr />
                     <p>Don't have an account? <Link to="/signup">Sign up!</Link></p>
