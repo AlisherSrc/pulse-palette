@@ -2,7 +2,7 @@
     display: flex;
     flex-flow: column;
 
-    width: 100%;
+    width: 90%;
     height: 100%;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
@@ -45,6 +45,6 @@
 }
 
 .card_container{
-    width: 20%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
 }

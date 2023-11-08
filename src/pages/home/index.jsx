@@ -9,17 +9,6 @@ const Home = () => {
 
    const {playlists,loading} = useGetLatestPlaylists();
 
-    // group{
-    // title:string
-    // groupID:string
-    // inputPlaylists
-    // }
-    // groups.forEach((group) => {
-
-    //     console.log(group);
-    // })
-    // Need to get all playlists and filter them by public, in order to show them in the "Latest" group where all public 
-    // playlists will be displayed
     return (
         <>
             <div className={`${styles.home}`}>

@@ -1,59 +1,95 @@
-.groupPart{
-display: flex;
-margin-left: 5%;
-margin-top: 20px;
-height: 37vh;
+.main{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;  
+    width: 100%; 
+}
+
+.groupPart {
+  display: flex;
+  /* justify-content: space-between; */
+  width: 90%;
+  /* margin-left: 5%; */
+  margin-top: 20px;
+  height: 25rem;
 }
 .groupPart img {
-    width: 20%;
-    height: 100%;
-    border-radius: 10px;
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
 }
-.groupText{
-    padding-left: 4%;
+.groupText {
+  padding-left: 4%;
 }
-.groupText h1{
-    color: #fff;
-    margin-bottom: 10%;
+.groupText h1 {
+  color: #fff;
+  margin-bottom: 10%;
+  font-size: 2.5rem;
 }
-.groupText h3{
-    color: #fff;
+.groupText h3 {
+  color: #fff;
 }
-.playlists{
-    margin-top: 2%;
-    margin-left: 2%;
-    margin-right: 2%;
-}
+
 .playlists {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
-.playlist{ /*25% width for each item to have 4 items in a row */
-    box-sizing: border-box;
-    border: 1px solid #000;
-    text-align: center;
-    border-radius: 10px;
-    height: 37vh;
-    background-color: #a49c9c;
-} 
-.playlist img{
-    width: 100%;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    height: 65%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  gap: 20px 20px;
 }
-.playlist h4{
-    text-align: left;
-    padding-left: 5%;
-    margin-bottom: 5%;
-    margin-top:3%;
+
+.card_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 90%;
+    margin-left: 5%;
+
+    overflow-x: hidden;
 }
-.playlist p{
-    font-size: 70%;
-    text-align: left;
-    padding-left: 5%;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.playlist {
+  /*25% width for each item to have 4 items in a row */
+  box-sizing: border-box;
+  border: 1px solid #000;
+  text-align: center;
+  border-radius: 10px;
+  height: 37vh;
+  background-color: #a49c9c;
+}
+.playlist img {
+  width: 100%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  height: 65%;
+}
+.playlist h4 {
+  text-align: left;
+  padding-left: 5%;
+  margin-bottom: 5%;
+  margin-top: 3%;
+}
+.playlist p {
+  font-size: 70%;
+  text-align: left;
+  padding-left: 5%;
 }
 /* .playlists{
 display: flex;

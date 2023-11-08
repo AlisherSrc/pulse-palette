@@ -6,11 +6,11 @@ import { db } from '../../config/firebase';
 import { Link } from 'react-router-dom';
 
 const Group = (props) => {
-// title: string;
-// cards: Card[];
-// numShowed: number; - number of cards showed 
+    // title: string;
+    // cards: Card[];
+    // numShowed: number; - number of cards showed 
 
-    const [playlists,setPlaylists] = useState([]);
+    const [playlists, setPlaylists] = useState([]);
 
     const {
         title,
@@ -24,12 +24,12 @@ const Group = (props) => {
 
         const getCards = async () => {
             try {
-                const q = query(collection(db,"playlist"), where("groupID","==",groupID));
+                const q = query(collection(db, "playlist"), where("groupID", "==", groupID));
 
                 const querySnapshot = await getDocs(q);
 
                 querySnapshot.forEach((playlist) => {
-                    cards.push({id:playlist.id,...playlist.data()});
+                    cards.push({ id: playlist.id, ...playlist.data() });
                 });
 
                 setPlaylists(cards);
@@ -39,28 +39,29 @@ const Group = (props) => {
             }
         }
 
-         if(!inputPlaylists) getCards();
-         else setPlaylists(inputPlaylists);
-    },[]);
-    
-    
+        if (!inputPlaylists) getCards();
+        else setPlaylists(inputPlaylists);
+    }, []);
+
+
 
     return (
         <div className={`${styles.group}`}>
             <div className={`${styles.group_text}`}>
                 <h2>{title}:</h2>
-                <Link to={groupID ? `group/${groupID}` :`group/${title}`}>show all</Link>
+                <Link to={groupID ? `group/${groupID}` : `group/${title}`}>show all</Link>
             </div>
 
             <div className={`${styles.cards}`}>
-                {playlists.length !== 0 && playlists.slice(0,numShowed).map((playlist) => (
-                    <Card id={playlist.id}
-                    imageUrl={playlist.imageUrl} 
-                    title={playlist.title}
-                    description={playlist.description}
-                    key={playlist.id}
-                    />
-                ))} 
+                {playlists.length !== 0 && playlists.slice(0, numShowed).map((playlist) => (
+                    <div key={playlist.id} className={styles.card_container}>
+                        <Card id={playlist.id}
+                            imageUrl={playlist.imageUrl}
+                            title={playlist.title}
+                            description={playlist.description}
+                        />
+                    </div>
+                ))}
 
                 {/* <Card imageUrl="https://i.pinimg.com/564x/2c/5f/0f/2c5f0f4d8cf86b6fed0a895462a93e92.jpg"
                     title="Soft Rock"

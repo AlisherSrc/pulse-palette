@@ -239,15 +239,15 @@ const PlaylistBuilder = () => {
 
                                 <div className={styles.songDisplayed__data__media}>
                                     <div className={styles.songDisplayed__data__info}>
-                                        <p className={styles.sonName}>{song.name}</p>
+                                        <p className={styles.songName}>{song.name}</p>
                                         <p className={styles.author}>{song.singer}</p>
                                     </div>
                                     <div className={styles.h5Player}>
                                         <H5AudioPlayer
                                             className={styles.audioPlayer}
-                                            autoPlay
                                             src={song.songUrl}
                                             customVolumeControls={[]}
+                                            id="h5Style"
                                         />
                                     </div>
                                     {/*<audio preload controls>*/}
