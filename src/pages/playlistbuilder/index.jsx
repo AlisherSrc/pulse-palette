@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./playlistBuilder.module.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
@@ -11,9 +11,12 @@ import H5AudioPlayer  from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
 import Button from "../../components/button";
+import { getAuth } from "firebase/auth";
 
 // It should display user's not uploaded songs, we can do so by the userID field of songs
 const PlaylistBuilder = () => {
+    // User
+    const [currUser,setUser] = useState();
     // Song fields
     const [audioName, setAudioName] = useState('');
     const [imageFile, setImageFile] = useState(null);
@@ -29,6 +32,14 @@ const PlaylistBuilder = () => {
     const [isAudioLoading,setAudioLoading] = useState(false);
 
     const songFormRef = useRef();
+    const auth = getAuth();
+    // User
+    
+
+
+    useEffect(() => {
+        setUser(auth.currentUser);
+    },[])
 
 
     const getAudioDuration = (file) => {
@@ -71,7 +82,8 @@ const PlaylistBuilder = () => {
                     name: song.name,
                     playlistID: playlistID,
                     singer: song.singer,
-                    songFile: song.songUrl
+                    songFile: song.songUrl,
+                    userEmail: currUser.email
                 });
 
                 console.log("Song created:", song.name);
@@ -87,7 +99,8 @@ const PlaylistBuilder = () => {
             public: isPublic,
             title: title,
             createdDate: Timestamp.now(),
-            isPopular: false
+            isPopular: false,
+            userEmail: currUser.email
             // Later we need to add a userId to it
         }).then((snapshot) => console.log("Playlist " + playlistID + " created"))
             .catch((error) => console.log(error));

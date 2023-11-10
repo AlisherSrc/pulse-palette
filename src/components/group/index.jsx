@@ -5,6 +5,9 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { Link } from 'react-router-dom';
 
+
+// TO DO: When Group is empty, it should indicate so visually somehow
+
 const Group = (props) => {
     // title: string;
     // cards: Card[];
@@ -23,6 +26,8 @@ const Group = (props) => {
         const cards = [];
 
         const getCards = async () => {
+            console.log(inputPlaylists)
+
             try {
                 const q = query(collection(db, "playlist"), where("groupID", "==", groupID));
 

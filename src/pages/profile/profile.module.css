@@ -1,87 +1,88 @@
-body{
-    width: 100%;
+body {
+  width: 100%;
 }
-.profilePart{
-    margin-left: 2%;
-    display: flex;
-    margin-top: 2%;
-    display: 37vh;
-    position: relative;
-    width: 100%;
+.profilePart {
+  margin-left: 2%;
+  display: flex;
+  margin-top: 2%;
+  display: 37vh;
+  position: relative;
+  width: 100%;
 }
-.profilePart img{
-    height: 100%;
+.profilePart img {
+  height: 100%;
 }
-.playlists a{
-    text-decoration: none;
-    color: #000;
+.playlists a {
+  text-decoration: none;
+  color: #000;
 }
-.userData{
-    color: #e8dfdf;
-    position: relative;    
-    margin-left: 4%;
+.userData {
+  color: #e8dfdf;
+  position: relative;
+  margin-left: 4%;
 }
-.userData h2{
-    margin-top: 10%;
+.userData h2 {
+  margin-top: 10%;
 }
-.userData h4{
-    position: absolute;
-    bottom: 0;
-    right: 0;
+.userData h4 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
-.profilePart button{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    
+.profilePart button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
-@media (max-width:400px) {
-    .profilePart button{
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: auto;
-    }
-}
-.list{
-    margin-top: 7%;
-    margin-left: 2%;
-    color: #e8dfdf;
-}
-.playlists{
-    margin-top: 2%;
-    margin-left: 2%;
-    margin-right: 2%;
+
+.list {
+  margin-top: 7%;
+  margin-left: 2%;
+  color: #e8dfdf;
 }
 .playlists {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.playlists {
+  display: flex;
+  flex-flow: column;
+}
+
+.playlist {
+  /*25% width for each item to have 4 items in a row */
+  box-sizing: border-box;
+  border: 1px solid #000;
+  text-align: center;
+  border-radius: 10px;
+  height: 47vh;
+  background-color: #a49c9c;
+}
+.playlist img {
+  width: 100%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  height: 65%;
+}
+.playlist h4 {
+  text-align: left;
+  padding-left: 5%;
+  margin-bottom: 5%;
+  margin-top: 3%;
+}
+.playlist p {
+  font-size: 70%;
+  text-align: left;
+  padding-left: 5%;
+}
+
+@media (max-width: 400px) {
+  .profilePart button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: auto;
   }
-  
-.playlist{ /*25% width for each item to have 4 items in a row */
-    box-sizing: border-box;
-    border: 1px solid #000;
-    text-align: center;
-    border-radius: 10px;
-    height: 47vh;
-    background-color: #a49c9c;
-} 
-.playlist img{
-    width: 100%;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    height: 65%;
-}
-.playlist h4{
-    text-align: left;
-    padding-left: 5%;
-    margin-bottom: 5%;
-    margin-top:3%;
-}
-.playlist p{
-    font-size: 70%;
-    text-align: left;
-    padding-left: 5%;
 }
