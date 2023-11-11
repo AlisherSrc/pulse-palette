@@ -6,6 +6,7 @@ import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firesto
 import { db } from '../../config/firebase';
 import useGetLatestPlaylists from '../../hooks/useGetLatestPlaylists';
 import Card from '../../components/card';
+import useGetUserPlaylists from '../../hooks/useGetUserPlaylists';
 
 const Group = () => {
     const { id } = useParams();
@@ -13,7 +14,7 @@ const Group = () => {
     const [group, setGroup] = useState(null);
     const [loading, setLoading] = useState(true);
     const { playlists: latestPlaylists, loading: loadingPlaylists, errorPlaylists } = useGetLatestPlaylists();
-
+    const [userPlaylists,userPlaylistsLoading,error] = useGetUserPlaylists();
 
     useEffect(() => {
         const docs = [];
@@ -40,12 +41,21 @@ const Group = () => {
                 setLoading(false);
             }
 
+
+            // Specific cases
             if (id === "Latest") {
                 setPlaylists(latestPlaylists);
                 setGroup({ title: id });
                 !loadingPlaylists && setLoading(false);
                 console.log(latestPlaylists, loadingPlaylists);
+            } else if (id === "created") {
+                setPlaylists(userPlaylists);
+                setGroup({title: id});
+                !userPlaylistsLoading && setLoading(false);
+            } else if (id === "favorites") {
+                
             } else getDocuments();
+
         } catch (err) {
             console.log(err)
         }
@@ -53,7 +63,7 @@ const Group = () => {
 
 
 
-    }, [latestPlaylists, id, errorPlaylists]);
+    }, [latestPlaylists, id, errorPlaylists,userPlaylistsLoading]);
 
 
     return (

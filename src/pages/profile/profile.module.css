@@ -1,5 +1,6 @@
 body {
   width: 100%;
+  overflow-x: hidden;
 }
 .profilePart {
   margin-left: 2%;
@@ -41,11 +42,11 @@ body {
   margin-left: 2%;
   color: #e8dfdf;
 }
-.playlists {
+/* .playlists {
   margin-top: 2%;
   margin-left: 2%;
   margin-right: 2%;
-}
+} */
 .playlists {
   display: flex;
   flex-flow: column;
