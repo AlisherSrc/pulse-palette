@@ -9,6 +9,7 @@ import Group from "../../components/group";
 import { Button } from 'antd';
 import { Context } from "../../App";
 import useGetUserPlaylists from "../../hooks/useGetUserPlaylists";
+import useTurnDocIdsIntoDocs from "../../hooks/useTurnDocIdsToDocs";
 // import { Group } from "antd/es/avatar";
 
 
@@ -18,11 +19,21 @@ const Profile = () => {
 
     const [userPlaylists,loading,error] = useGetUserPlaylists();
 
-    // const {setUserCreatedPlaylists} = useContext(Context);
+    const {setCustomUser} = useContext(Context);
 
     const nav = useNavigate();
 
-    let auth = getAuth();
+    const auth = getAuth();
+    // id,imageUrl, title, description
+    const likedPlaylists = {
+        id: 0,
+        imageUrl: "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        title: "Liked Songs",
+        ddescription: "Here you can see all your favorite songs!"
+    }
+
+    const [docs] = useTurnDocIdsIntoDocs([["My first auth playlist oM1Q3Chvp0Y9JXKV"],"playlist"]);
+    console.log(docs);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth,async (user) => {
@@ -33,7 +44,7 @@ const Profile = () => {
                 const q = query(collection(db,"user"),where("email",'==',user.email));
                 const userDoc = await getDocs(q);
                 userDoc.forEach((user) => {
-                    console.log(user.data())
+                    setCustomUser({id:user.id,...user.data()})
                 })
             }else{
                 setisAuth(false);
@@ -63,8 +74,7 @@ const Profile = () => {
                 </div>
                 <div className={`${styles.playlists}`}>
                     {/* Still undefined when click*, address this issue by providing query or something to do with it */}
-                    {!loading ? <Group isUsersPlaylists title="Created Playlists" inputPlaylists={userPlaylists} /> : "Loading"}
-                    <Group isUsersFavorites title="Favorite" inputPlaylists={[]}/>
+                    {!loading ? <Group isUsersPlaylists inputPlaylists={[likedPlaylists,...userPlaylists]} /> : "Loading"}
                 </div>
             </div>
 

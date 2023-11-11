@@ -14,7 +14,6 @@ const Group = (props) => {
     // numShowed: number; - number of cards showed 
 
     const [playlists, setPlaylists] = useState([]);
-    // Proirity:
     const {
         title,
         numShowed,
@@ -22,7 +21,7 @@ const Group = (props) => {
         inputPlaylists,
         isUsersFavorites,
         isUsersPlaylists
-        } = props;
+    } = props;
 
     useEffect(() => {
         const cards = [];
@@ -56,7 +55,7 @@ const Group = (props) => {
     return (
         <div className={`${styles.group}`}>
             <div className={`${styles.group_text}`}>
-                <h2>{title}:</h2>
+                <h2>{title}</h2>
                 {isUsersPlaylists && <Link to={`/group/created`}>show all</Link>}
                 {isUsersFavorites && <Link to={`/group/favorites`}>show all</Link>}
                 {/* Default */}

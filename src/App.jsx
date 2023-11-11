@@ -22,9 +22,10 @@ export const Context = createContext();
 
 const ContextdbProvider = ({ children }) => {
   const [userCreatedPlaylists, setUserCreatedPlaylists] = useState([]);
+  const [customUser,setCustomUser] = useState([]);
 
   return (
-    <Context.Provider value={{ userCreatedPlaylists, setUserCreatedPlaylists }}>
+    <Context.Provider value={{ userCreatedPlaylists, setUserCreatedPlaylists,customUser,setCustomUser }}>
       {children}
     </Context.Provider>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './group.module.css';
 import { useParams } from 'react-router-dom';
 import styles from './group.module.css';
@@ -7,14 +7,18 @@ import { db } from '../../config/firebase';
 import useGetLatestPlaylists from '../../hooks/useGetLatestPlaylists';
 import Card from '../../components/card';
 import useGetUserPlaylists from '../../hooks/useGetUserPlaylists';
+import { Context } from '../../App';
 
 const Group = () => {
     const { id } = useParams();
     const [playlists, setPlaylists] = useState([]);
     const [group, setGroup] = useState(null);
     const [loading, setLoading] = useState(true);
+    
+    const {customUser} = useContext(Context);
     const { playlists: latestPlaylists, loading: loadingPlaylists, errorPlaylists } = useGetLatestPlaylists();
     const [userPlaylists,userPlaylistsLoading,error] = useGetUserPlaylists();
+    
 
     useEffect(() => {
         const docs = [];
@@ -53,7 +57,7 @@ const Group = () => {
                 setGroup({title: id});
                 !userPlaylistsLoading && setLoading(false);
             } else if (id === "favorites") {
-                
+                customUser.favoritePlaylists
             } else getDocuments();
 
         } catch (err) {
