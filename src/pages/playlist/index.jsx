@@ -7,7 +7,8 @@ import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firesto
 
 import H5AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-
+import { getAuth } from 'firebase/auth';
+import heart from '../../images/heart.svg';
 
 const Playlist = () => {
     const { id } = useParams();
@@ -15,6 +16,15 @@ const Playlist = () => {
     const refAudio = useRef(null);
     const [playlist, setPlaylist] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [currUser, setCurrUser] = useState(null);
+
+    const auth = getAuth();
+
+    useEffect(() => {
+        if (auth.currentUser) {
+            setCurrUser(auth.currentUser);
+        } else console.log("Not auth")
+    }, [auth])
 
     useEffect(() => {
         const docs = [];
@@ -43,13 +53,15 @@ const Playlist = () => {
 
     return (
         <>
-            {loading ? <p>Loading...</p> :
-                <div>
+            {(loading) ? <p>Loading...</p> :
+                <div className={`${styles.main}`}>
                     <div className={`${styles.playlistPart}`}>
                         <img src={songs[0].image} alt="" />
                         <div className={`${styles.playlistText}`}>
                             <h1>Title : {playlist.title}</h1>
                             <h3>Description : {playlist.description}</h3>
+                            {currUser.email === playlist.userEmail && <button className={`${styles.button_68}`} role="button">Edit</button>}
+                            {/* <img src={}/> */}
                         </div>
                     </div>
                     <div className={`${styles.audioList}`}>

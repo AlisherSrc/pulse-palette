@@ -6,11 +6,12 @@ import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
 import upload_image from '../../../public/image-upload.svg';
 import upload_music from '../../../public/music-upload.svg';
+import trashcan from '../../images/trashcan.svg';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import H5AudioPlayer  from 'react-h5-audio-player';
+import H5AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
 import Button from "../../components/button";
@@ -19,7 +20,7 @@ import { getAuth } from "firebase/auth";
 // It should display user's not uploaded songs, we can do so by the userID field of songs
 const PlaylistBuilder = () => {
     // User
-    const [currUser,setUser] = useState();
+    const [currUser, setUser] = useState();
     // Song fields
     const [audioName, setAudioName] = useState('');
     const [imageFile, setImageFile] = useState(null);
@@ -32,17 +33,17 @@ const PlaylistBuilder = () => {
 
     const [songs, setSongs] = useState([]); //list of files
 
-    const [isAudioLoading,setAudioLoading] = useState(false);
+    const [isAudioLoading, setAudioLoading] = useState(false);
 
     const songFormRef = useRef();
     const auth = getAuth();
     // User
-    
+
 
 
     useEffect(() => {
         setUser(auth.currentUser);
-    },[])
+    }, [])
 
 
     const getAudioDuration = (file) => {
@@ -69,7 +70,7 @@ const PlaylistBuilder = () => {
 
     const createPlaylist = async () => {
 
-        if(!title || !description || songs.length === 0){
+        if (!title || !description || songs.length === 0) {
             toast("Please,fill all feilds and upload at least 1 audio file")
             return;
         }
@@ -243,17 +244,20 @@ const PlaylistBuilder = () => {
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                    <div className={styles.footer}>
-                        <button type="submit">Add a song</button>
-                    </div>
+                        </div>
+                        <div className={styles.footer}>
+                            <button type="submit">Add a song</button>
+                        </div>
                     </div>
                 </form>
                 <div className={`${styles.songs}`}>
                     {isAudioLoading && <p>Uploading...</p>}
                     {songs.length !== 0 && songs.map((song, i) => (
                         <div key={generateRandomString(16)} className={`${styles.songDisplayed}`}>
-                            <h3>{i + 1}</h3>
+                            <div className={`${styles.songDisplayed__top}`}>
+                                <h3>{i + 1}</h3>
+                                <img className={`${styles.delete_icon}`} src={trashcan} alt="delete" />
+                            </div>
                             <hr />
                             <div className={`${styles.songDisplayed__data}`}>
                                 <img src={song.imageUrl} />
@@ -283,7 +287,10 @@ const PlaylistBuilder = () => {
 
                     {songs.length !== 0 && console.log(songs[0].imageUrl)}
                 </div>
-                <Button text="Create" onClick={createPlaylist} medium />
+                <div className={`${styles.main_buttons}`}>
+                    <Button text="Create" onClick={createPlaylist} medium />
+                    <Button text="Clear" medium danger />
+                </div>
                 <ToastContainer
                     position="top-center"
                     autoClose={5000}

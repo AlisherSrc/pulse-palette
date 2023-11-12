@@ -54,7 +54,7 @@ const Group = () => {
                 console.log(latestPlaylists, loadingPlaylists);
             } else if (id === "created") {
                 setPlaylists(userPlaylists);
-                setGroup({title: id});
+                setGroup({title: "All playlists"});
                 !userPlaylistsLoading && setLoading(false);
             } else if (id === "favorites") {
                 customUser.favoritePlaylists
