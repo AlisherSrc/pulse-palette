@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { db, storage } from '../../config/firebase';
 import { useEffect, useRef, useState } from 'react';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 import H5AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
@@ -39,7 +40,7 @@ const Playlist = () => {
             });
 
             setSongs(docs);
-            setPlaylist(playlistDoc.data());
+            setPlaylist({id:playlistDoc.id,...playlistDoc.data()});
             setLoading(false);
 
         }
@@ -60,7 +61,7 @@ const Playlist = () => {
                         <div className={`${styles.playlistText}`}>
                             <h1>Title : {playlist.title}</h1>
                             <h3>Description : {playlist.description}</h3>
-                            {currUser.email === playlist.userEmail && <button className={`${styles.button_68}`} role="button">Edit</button>}
+                            {currUser.email === playlist.userEmail && <Link to={`/playlist/${playlist.id}/edit`}><button className={`${styles.button_68}`} role="button">Edit</button></Link>}
                             {/* <img src={}/> */}
                         </div>
                     </div>

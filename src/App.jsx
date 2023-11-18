@@ -1,10 +1,8 @@
 import './App.css'
 
 import { React, useState, createContext } from 'react';
-
 import Navbar from './components/navbar';
-
-import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import Home from './pages/home';
 import Footer from './components/footer';
 import PlaylistBuilder from './pages/playlistbuilder';
@@ -14,6 +12,7 @@ import Group from './pages/group'
 import ErrorComponent from './components/error';
 import Register from './pages/register';
 import Login from './pages/login';
+import PlaylistEditor from './pages/playlistEditor';
 
 
 export const Context = createContext();
@@ -42,6 +41,7 @@ function App() {
         <Route element={<Group />} path='/group/:id' />
         <Route element={<Register />} path='/signup' />
         <Route element={<Login />} path='/login' />
+        <Route element={<PlaylistEditor />} path='playlist/:id/edit' />
       </Route>
     ),
 
