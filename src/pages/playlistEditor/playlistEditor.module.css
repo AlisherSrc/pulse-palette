@@ -222,6 +222,10 @@ input:hover {
 }
 
 .songDisplayed__data__info{
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+
   font-size: 1.5rem;
 }
 
@@ -336,6 +340,11 @@ input:hover {
 .songDisplayed__top{
   display: flex;
   align-items: center;
-  justify-content: right;
-  gap: 45%;
+  justify-content: space-between;
+  gap: 10%;
+}
+
+.songDisplayed__top__buttons{
+  display: flex;
+  gap: 10px;
 }

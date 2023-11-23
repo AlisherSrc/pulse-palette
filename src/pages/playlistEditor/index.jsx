@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./playlistEditor.module.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
-import { Timestamp, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { Timestamp, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
 import upload_image from '../../../public/image-upload.svg';
 import upload_music from '../../../public/music-upload.svg';
@@ -43,6 +43,10 @@ const PlaylistEditor = () => {
     // For editing
     const [audioEditName, setAudioEditName] = useState("");
     const [audioEditSinger, setAudioEditSinger] = useState("");
+    const [audioEditImage, setAudioEditImage] = useState(null);
+    const [audioEditAudioFile, setAudioEditAudioFile] = useState(null);
+
+    const [audioEditLoading, setAudioEditLoading] = useState(false);
 
     useEffect(() => {
 
@@ -90,21 +94,17 @@ const PlaylistEditor = () => {
 
 
     const toggleEditMode = (id) => {
-        const updatedSongs = songs.map((song) => {
-            if (song.id === id) {
-                setAudioEditName(song.name);
-                setAudioEditSinger(song.singer);
+        setSongs((currentSongs) => {
+            return currentSongs.map((song) => {
+                if (song.id === id) {
+                    setAudioEditName(song.name);
+                    setAudioEditSinger(song.singer);
 
-                return { ...song, editMode: !song.editMode }
-            }
-
-            // To allow edit one song at a time
-            return { ...song, editMode: false };
-        })
-
-        console.log(updatedSongs);
-
-        setSongs(updatedSongs);
+                    return { ...song, editMode: !song.editMode };
+                }
+                return { ...song, editMode: false };
+            });
+        });
     }
 
     const getAudioDuration = (file) => {
@@ -130,6 +130,7 @@ const PlaylistEditor = () => {
     const handlePublicChange = (e) => {
         setPublic(e.target.checked);
     }
+
 
     const handleSongSubmit = (event) => {
         event.preventDefault();
@@ -201,6 +202,91 @@ const PlaylistEditor = () => {
 
     }
 
+    // User can edit
+    // title
+    // singer
+    // audio
+    // image
+
+    // TO DO: previous audio and images in the storage should be deleted
+    const editAudio = async (id) => {
+        // If user didn't change anything
+        if (!audioEditName && !audioEditSinger && !audioEditImage && !audioEditAudioFile) {
+            toggleEditMode(id);
+            return;
+        }
+
+        try {
+            const updatedFields = {};
+
+
+            // Our audio and image
+            let audioUrl = '';
+            let imageUrl = '';
+            setAudioEditLoading(true);
+
+            if (audioEditAudioFile) {
+                const audioStorageRef = ref(storage, `audio/${audioEditAudioFile.name}${generateRandomString(5)}`);
+                await uploadBytes(audioStorageRef, audioEditAudioFile);
+                audioUrl = await getDownloadURL(audioStorageRef);
+                updatedFields.songFile = audioUrl;
+            }
+            if (audioEditImage) {
+                const imageStorageRef = ref(storage, `songImages/${audioEditImage.name}${generateRandomString(5)}`);
+                await uploadBytes(imageStorageRef, audioEditImage);
+                imageUrl = await getDownloadURL(imageStorageRef);
+                updatedFields.image = imageUrl;
+            }
+
+            const audioRef = doc(db, "song", id);
+
+            // Conditionaly adding edited fields 
+            if (audioEditName) updatedFields.name = audioEditName;
+            if (audioEditSinger) updatedFields.singer = audioEditSinger;
+
+
+            await updateDoc(audioRef, updatedFields)
+
+
+
+            // Reset all fields 
+            setAudioEditName('');
+            setAudioEditSinger('');
+            setAudioEditImage(null);
+            setAudioEditAudioFile(null);
+
+            toggleEditMode(id);
+
+            // To force component to reload
+            setSongs((currentSongs) => {
+                return currentSongs.map((song) => {
+                    if (song.id === id) {
+                        return {
+                            ...song,
+                            ...updatedFields
+                        };
+                    }
+                    return song;
+                });
+            });
+
+            setAudioEditLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const handleEditAudioUpload = (event) => {
+        const file = event.target.files[0];
+        setAudioEditAudioFile(file);
+    }
+
+    const handleEditImageUpload = (event) => {
+        const file = event.target.files[0];
+        setAudioEditImage(file);
+    }
+
     return (<>
         {loading ? <p>Loading...</p> : <div className={`${styles.builder}`}>
             <div className={`${styles.builder_inner}`}>
@@ -254,27 +340,32 @@ const PlaylistEditor = () => {
                         </div>
                     </div>
                 </form>
+                {/* Here are songs */}
                 <div className={`${styles.songs}`}>
                     {songs.length !== 0 && songs.map((song, i) => (
                         <div key={song.id} className={`${styles.songDisplayed}`}>
+                            {audioEditLoading && <p>Loading...</p>}
                             <div className={`${styles.songDisplayed__top}`}>
                                 <h3>{i + 1}</h3>
                                 {/* <img className={`${styles.delete_icon}`} src={trashcan} alt="delete" /> */}
-                                <Button text={song.editMode ? "Save" : "Edit"} onClick={() => toggleEditMode(song.id)} />
+                                <div className={`${styles.songDisplayed__top__buttons}`}>
+                                    <Button text={song.editMode ? "Cancel" : "Edit"} onClick={() => toggleEditMode(song.id)} />
+                                    {song.editMode && <Button text="Save" onClick={() => editAudio(song.id)} />}
+                                </div>
                             </div>
                             <hr />
                             <div className={`${styles.songDisplayed__data}`}>
-                                {song.editMode ? <input id="audioImage" type="file" accept="image/*" /> : <img src={song.image} />}
+                                {song.editMode ? <input id="audioImage" type="file" accept="image/*" onChange={(e) => handleEditImageUpload(e)} /> : <img src={song.image} />}
 
                                 {song.editMode ?
                                     <div className={styles.songDisplayed__data__media}>
                                         <div className={styles.songDisplayed__data__info}>
-                                            <input type="text" className={styles.songName} value={audioEditName} onChange={(e) => setAudioEditName(e.target.value)} />
-                                            <input type="text" value={audioEditSinger} onChange={(e) => setAudioEditSinger(e.target.value)} />
+                                            <input type="text" className={styles.songName} placeholder="Song name" onChange={(e) => setAudioEditName(e.target.value)} />
+                                            <input type="text" placeholder="Singer" onChange={(e) => setAudioEditSinger(e.target.value)} />
                                         </div>
                                         <div className={styles.h5Player}>
                                             {/* src={song.songFile} */}
-                                            <input id="audioFile" type="file" accept="audio/*" />
+                                            <input id="audioFile" type="file" accept="audio/*" onChange={(e) => handleEditAudioUpload(e)} />
                                         </div>
                                     </div>
                                     : <div className={styles.songDisplayed__data__media}>
