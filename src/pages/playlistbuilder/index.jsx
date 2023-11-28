@@ -36,6 +36,7 @@ const PlaylistBuilder = () => {
     const [isAudioLoading, setAudioLoading] = useState(false);
 
     const songFormRef = useRef();
+    const playlistFormRef = useRef();
     const auth = getAuth();
     // User
 
@@ -163,6 +164,18 @@ const PlaylistBuilder = () => {
         setAudioFile(null);
     }
 
+    const clearAllFields = () => {
+        setTitle('')
+        setDescription('');
+        setSongs([]);
+        songFormRef.current.reset();
+        playlistFormRef.current.reset();
+        setAudioName('');
+        setSinger('');
+        setImageFile(null);
+        setAudioFile(null);
+    }
+
     // Song:
     // image url
     // name string
@@ -202,7 +215,7 @@ const PlaylistBuilder = () => {
         <div className={`${styles.builder}`}>
             <div className={`${styles.builder_inner}`}>
                 <h2>Create your playlist</h2>
-                <form className={`${styles.playlistForm}`}>
+                <form className={`${styles.playlistForm}`} ref={playlistFormRef}>
                     <input type="text" placeholder="Title" onChange={handleTitleChange} />
                     <input type="text" placeholder="Short description" onChange={handleDesChange} />
                     <div className={`${styles.publicCheck}`}>
@@ -289,7 +302,7 @@ const PlaylistBuilder = () => {
                 </div>
                 <div className={`${styles.main_buttons}`}>
                     <Button text="Create" onClick={createPlaylist} medium />
-                    <Button text="Clear" medium danger />
+                    <Button text="Clear" medium danger onClick={clearAllFields} />
                 </div>
                 <ToastContainer
                     position="top-center"

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./playlistEditor.module.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
-import { Timestamp, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { Timestamp, collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
 import upload_image from '../../../public/image-upload.svg';
 import upload_music from '../../../public/music-upload.svg';
@@ -16,18 +16,22 @@ import 'react-h5-audio-player/lib/styles.css';
 
 import Button from "../../components/button";
 import { getAuth } from "firebase/auth";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const PlaylistEditor = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [playlist, setPlaylist] = useState();
     const [songs, setSongs] = useState();
 
+    // Playlist
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [isPublic, setPublic] = useState();
+
+    const [playlistLoading, setPlaylistLoading] = useState(false);
     // Song fields
     const [audioName, setAudioName] = useState('');
     const [imageFile, setImageFile] = useState(null);
@@ -161,13 +165,26 @@ const PlaylistEditor = () => {
             // url[0] - audioUrl
             // url[1] - imageUrl
 
-            setSongs([{
-                name: audioName,
-                imageUrl: urls[1],
-                songUrl: urls[0],
-                singer: singer
-            }, ...songs]);
+            const songID = `${audioName}${generateRandomString(16)}`;
 
+            return setDoc(doc(db, "song", songID), {
+                image: urls[1],
+                name: audioName,
+                playlistID: id,
+                singer: singer,
+                songFile: urls[0],
+                userEmail: auth.currentUser.email
+            }).then((snapshot) => {
+                console.log("Song created");
+
+                setSongs([{
+                    id: songID,
+                    name: audioName,
+                    image: urls[1],
+                    songFile: urls[0],
+                    singer: singer
+                }, ...songs]);
+            })
         }).catch((error) => console.log(error));
 
         songFormRef.current.reset();
@@ -199,6 +216,20 @@ const PlaylistEditor = () => {
     }
 
     const editPlaylist = () => {
+        if (!title || !description) {
+            alert("Please, fill all fields");
+            return;
+        }
+
+        const playlistRef = doc(db, "playlist", id);
+
+        setPlaylistLoading(true);
+        updateDoc(playlistRef, {
+            title: title,
+            description: description,
+            public: isPublic
+        });
+        setPlaylistLoading(false);
 
     }
 
@@ -277,6 +308,25 @@ const PlaylistEditor = () => {
 
     }
 
+    const playlistDelete = async () => {
+        await deleteDoc(doc(db, "playlist", id));
+
+        navigate('/');
+    }
+
+    const audioDelete = async (id) => {
+        try {
+
+            await deleteDoc(doc(db, 'song', id));
+
+            setSongs((prev) => {
+                return prev.filter((song) => song.id !== id);
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const handleEditAudioUpload = (event) => {
         const file = event.target.files[0];
         setAudioEditAudioFile(file);
@@ -347,10 +397,10 @@ const PlaylistEditor = () => {
                             {audioEditLoading && <p>Loading...</p>}
                             <div className={`${styles.songDisplayed__top}`}>
                                 <h3>{i + 1}</h3>
-                                {/* <img className={`${styles.delete_icon}`} src={trashcan} alt="delete" /> */}
                                 <div className={`${styles.songDisplayed__top__buttons}`}>
                                     <Button text={song.editMode ? "Cancel" : "Edit"} onClick={() => toggleEditMode(song.id)} />
                                     {song.editMode && <Button text="Save" onClick={() => editAudio(song.id)} />}
+                                    <img className={`${styles.delete_icon}`} src={trashcan} alt="delete" onClick={() => audioDelete(song.id)} />
                                 </div>
                             </div>
                             <hr />
@@ -390,9 +440,10 @@ const PlaylistEditor = () => {
 
                     {songs.length !== 0 && console.log(songs[0].imageUrl)}
                 </div>
+                {playlistLoading && <p>Updating...</p>}
                 <div className={`${styles.main_buttons}`}>
                     <Button text="Save" onClick={editPlaylist} medium />
-                    <Button text="Clear" medium danger />
+                    <Button text="Delete" medium danger onClick={playlistDelete} />
                 </div>
                 <ToastContainer
                     position="top-center"
