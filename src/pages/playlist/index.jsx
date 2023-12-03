@@ -61,7 +61,7 @@ const Playlist = () => {
                         <div className={`${styles.playlistText}`}>
                             <h1>Title : {playlist.title}</h1>
                             <h3>Description : {playlist.description}</h3>
-                            {currUser.email === playlist.userEmail && <Link to={`/playlist/${playlist.id}/edit`}><button className={`${styles.button_68}`} role="button">Edit</button></Link>}
+                            {currUser?.email === playlist?.userEmail && <Link to={`/playlist/${playlist.id}/edit`}><button className={`${styles.button_68}`} role="button">Edit</button></Link>}
                             {/* <img src={}/> */}
                         </div>
                     </div>
