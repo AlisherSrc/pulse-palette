@@ -29,7 +29,7 @@ const Profile = () => {
         id: 0,
         imageUrl: "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         title: "Liked Songs",
-        ddescription: "Here you can see all your favorite songs!"
+        description: "Here you can see all your favorite songs!"
     }
 
     const [docs] = useTurnDocIdsIntoDocs([["My first auth playlist oM1Q3Chvp0Y9JXKV"],"playlist"]);

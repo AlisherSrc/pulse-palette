@@ -54,42 +54,51 @@ const Playlist = () => {
 
     return (
         <>
-            {(loading) ? <p>Loading...</p> :
-                <div className={`${styles.main}`}>
-                    <div className={`${styles.playlistPart}`}>
-                        <img src={songs[0].image} alt="" />
-                        <div className={`${styles.playlistText}`}>
-                            <h1>Title : {playlist.title}</h1>
-                            <h3>Description : {playlist.description}</h3>
-                            {currUser.email === playlist.userEmail && <Link to={`/playlist/${playlist.id}/edit`}><button className={`${styles.button_68}`} role="button">Edit</button></Link>}
-                            {/* <img src={}/> */}
+    {loading ? (
+        <p>Loading...</p>
+    ) : (
+        <div className={styles.main}>
+            <div className={styles.playlistPart}>
+                <img src={songs[0].image} alt="" className={styles.playlistImage} />
+                <div className={styles.playlistText}>
+                    <h1>Title: {playlist.title}</h1>
+                    <h3>Description: {playlist.description}</h3>
+                    {currUser.email === playlist.userEmail && (
+                        <Link to={`/playlist/${playlist.id}/edit`}>
+                            <button className={styles.button_68} role="button">Edit</button>
+                        </Link>
+                    )}
+                </div>
+            </div>
+            <hr className={styles.horizontalLine} />
+
+            <div className={styles.audioList}>
+                {songs.map((song, index) => (
+                    <div>
+                    <div className={styles.audio_player} key={song.id}>
+                        <img src={song.image} alt="" className={styles.songImage} />
+                        <div className={styles.audioManage}>
+                            <H5AudioPlayer
+                                className={styles.audioPlayer}
+                                src={song.songFile}
+                                customVolumeControls={[]}
+                            />
                         </div>
+                        <div className={styles.songInfo}>
+                            <h3>Name: {song.name}</h3>
+                            <h4>Singer: {song.singer}</h4>
+                        </div>
+                        {/* Additional Information (if needed) */}
+                        {/* {refAudio && `${Math.floor(refAudio.current.duration / 60)}:${Math.round(refAudio.current.duration - Math.floor(refAudio.current.duration / 60) * 60)}`} */}
                     </div>
-                    <div className={`${styles.audioList}`}>
-                        {songs.map((song, index) => (
-                            <div className={`${styles.audio_player}`} key={song.id}>
-                                <h1>{index + 1}</h1>
-                                <img src={song.image} alt="" />
-                                <div className={`${styles.audioManage}`}>
-                                    <H5AudioPlayer
-                                        className={styles.audioPlayer}
-                                        src={song.songFile}
-                                        customVolumeControls={[]}
-                                    />
-                                </div>
-                                <div className={`${styles.songInfo}`}>
-                                    <h3>Name : {song.name}</h3>
-                                    <h4>Singer : {song.singer}</h4>
-                                </div>
 
-
-                                {/* Something is wrong here, it is trying to render despite refAudio being null */}
-                                {/* {refAudio && `${Math.floor(refAudio.current.duration / 60)}:${Math.round(refAudio.current.duration - Math.floor(refAudio.current.duration / 60) * 60)}`} */}
-                            </div>
-                        ))}
                     </div>
-                </div>}
-        </>
+                ))}
+            </div>
+        </div>
+    )}
+</>
+
     )
 }
 

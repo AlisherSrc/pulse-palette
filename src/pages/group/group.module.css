@@ -5,98 +5,54 @@
     justify-content: center;  
     width: 100%; 
 }
-
 .groupPart {
   display: flex;
   /* justify-content: space-between; */
   width: 90%;
   /* margin-left: 5%; */
   margin-top: 20px;
-  height: 25rem;
+  margin-bottom: 50px;
 }
 .groupPart img {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   border-radius: 10px;
 }
 .groupText {
   padding-left: 4%;
 }
+.groupText a{
+  color: #A3AE9E;
+}
 .groupText h1 {
-  color: #fff;
+  color: #A3AE9E;
   margin-bottom: 10%;
   font-size: 2.5rem;
 }
 .groupText h3 {
-  color: #fff;
+  color: #A3AE9E;
 }
-
 .playlists {
   display: grid;
   grid-template-columns: repeat(4, minmax(200px, 1fr));
   gap: 20px 20px;
+  width: 90%;
+  margin-top: 50px;
 }
-
 .card_container{
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 90%;
+    width: 100%;
     margin-left: 5%;
-
-    overflow-x: hidden;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.playlist {
-  /*25% width for each item to have 4 items in a row */
-  box-sizing: border-box;
-  border: 1px solid #000;
-  text-align: center;
-  border-radius: 10px;
-  height: 37vh;
-  background-color: #a49c9c;
-}
-.playlist img {
-  width: 100%;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  height: 65%;
-}
-.playlist h4 {
-  text-align: left;
-  padding-left: 5%;
-  margin-bottom: 5%;
-  margin-top: 3%;
-}
-.playlist p {
-  font-size: 70%;
-  text-align: left;
-  padding-left: 5%;
-}
 /* .playlists{
 display: flex;
 flex-wrap: wrap;
 }
 .playlist{
-    width: 16%; /* 25% width for each item to have 4 items in a row 
+    width: 16%; 
     margin: 10px;
     box-sizing: border-box;
     border: 1px solid #000;
@@ -129,3 +85,9 @@ flex-wrap: wrap;
     text-align: left;
     padding-left: 5%;
 } */
+.horizontalLine {
+  width: 90%;
+  height: 3px; 
+  background-color: #37C513;
+  margin: 20px 0; 
+}

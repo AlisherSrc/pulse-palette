@@ -64,6 +64,7 @@ const Register = () => {
                 // send user to the home page
             }).then((snapshot) => {
                 console.log("User created!");
+                navigate("/home");
                 setLoading(false)
             })
             .catch((err) => {

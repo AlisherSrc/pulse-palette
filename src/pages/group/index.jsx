@@ -81,9 +81,10 @@ const Group = () => {
                             <h1>{group.title}</h1>
                         </div>
                     </div>
+                    <hr className={styles.horizontalLine} />
+
                     <div className={`${styles.playlists}`}>
                         {playlists.map((playlist) => (
-                            // Card component
                             <div key={playlist.id} className={`${styles.card_container}`}>
                                 <Card id={playlist.id} title={playlist.title} description={playlist.description} imageUrl={playlist.imageUrl} />
                             </div>

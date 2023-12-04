@@ -2,11 +2,9 @@
     display: flex;
     flex-flow: column;
     gap: 45px;
-
     align-items: center;
     justify-content: center;
-
-    margin-top: 7rem;
+    margin-top: 5rem;
     margin-bottom: 2rem;
 }
 
@@ -18,3 +16,10 @@
 .footer p{
     color: rgba(255,255,255,0.3);
 }
+.footer {
+    background-color: var(--main-bg-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    text-align: center;
+}
+
