@@ -44,7 +44,7 @@ const Login = () => {
                 <div className={`${styles.form}`}>
                     <hr />
 
-                    <h1>Sign up and start!</h1>
+                    <h1>Login</h1>
                     <div className={styles.socialSignUp}>
                         {/* Social sign up */}
                     </div>
@@ -60,7 +60,7 @@ const Login = () => {
                                 <input type="button" value="show" onClick={() => setPasswordShowed(!isPasswordShowed)} />
                             </div>
                         </div>
-                        {!loginLoading ? <Button text="Sign up" color="var(--lime-green)" width="15rem" height="2.5rem" onClick={(e) => login(e)} />
+                        {!loginLoading ? <Button text="Login" color="var(--lime-green)" width="15rem" height="2.5rem" onClick={(e) => login(e)} />
                         : <p>Loading...</p>}
                     </form>
                     <hr />

@@ -11,10 +11,16 @@ const Home = () => {
 
     return (
         <>
-            <div className={`${styles.home}`}>
-                {(playlists && playlists.length !== 0) ? <Group title="Latest" inputPlaylists={playlists} numShowed={4} />  : <p>Loading...</p>}
-                <Group title="Popular" groupID="lci3fBjppIELL2Ttlnb2" numShowed={4} />
-            </div>
+            <div className={styles.home}>
+    {playlists && playlists.length !== 0 ? (
+        <>
+            <Group title="Latest" inputPlaylists={playlists} numShowed={4} />
+            <Group title="Popular" groupID="lci3fBjppIELL2Ttlnb2" numShowed={4} />
+        </>
+    ) : (
+        <p>Loading...</p>
+    )}
+</div>
         </>
     )
 }

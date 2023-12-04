@@ -9,32 +9,34 @@ body {
   display: 37vh;
   position: relative;
   width: 100%;
+  margin-bottom: 5%;
 }
 .profilePart img {
   height: 100%;
 }
 .playlists a {
-  text-decoration: none;
-  color: #000;
+
 }
 .userData {
-  color: #e8dfdf;
+  color: #000;
   position: relative;
   margin-left: 4%;
 }
-.userData h2 {
-  margin-top: 10%;
+.userData h3 {
+  color: #000;
+  margin-bottom: 5%;
 }
-.userData h4 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+.userData h2 {
+  color: #000;
+  font-weight: 500;
 }
 
 .profilePart button {
   position: absolute;
   bottom: 0;
   left: 0;
+  width: auto;
+  margin-left: unset;
 }
 
 .list {
@@ -53,7 +55,7 @@ body {
 }
 
 .playlist {
-  /*25% width for each item to have 4 items in a row */
+  
   box-sizing: border-box;
   border: 1px solid #000;
   text-align: center;
