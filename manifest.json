@@ -1,0 +1,16 @@
+{
+    "theme_color": "#4c4b16",
+    "background_color": "#898121",
+    "orientation": "portrait",
+    "display": "standalone",
+    "dir": "auto",
+    "lang": "kk",
+    "name": "PulsePalette",
+    "short_name": "PPalette",
+    "start_url": ".",
+    "icons": [
+        {
+            
+        }
+    ]
+}
