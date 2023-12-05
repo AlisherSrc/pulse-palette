@@ -1,5 +1,4 @@
 import styles from './playlist.module.css';
-import { StepBackwardOutlined, StepForwardOutlined, PauseOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router-dom';
 import { db, storage } from '../../config/firebase';
 import { useEffect, useRef, useState } from 'react';
@@ -10,6 +9,7 @@ import H5AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { getAuth } from 'firebase/auth';
 import heart from '../../images/heart.svg';
+import Song from '../../components/song';
 
 const Playlist = () => {
     const { id } = useParams();
@@ -40,7 +40,7 @@ const Playlist = () => {
             });
 
             setSongs(docs);
-            setPlaylist({id:playlistDoc.id,...playlistDoc.data()});
+            setPlaylist({ id: playlistDoc.id, ...playlistDoc.data() });
             setLoading(false);
 
         }
@@ -54,46 +54,30 @@ const Playlist = () => {
 
     return (
         <>
-    {loading ? (
-        <p>Loading...</p>
-    ) : (
-        <div className={styles.main}>
-            <div className={styles.playlistPart}>
-                <img src={songs[0].image} alt="" className={styles.playlistImage} />
-                <div className={styles.playlistText}>
-                    <h1>Title: {playlist.title}</h1>
-                    <h3>Description: {playlist.description}</h3>
-                    {currUser?.email === playlist?.userEmail && <Link to={`/playlist/${playlist.id}/edit`}><button className={`${styles.button_68}`} role="button">Edit</button></Link>}
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <div className={styles.main}>
+                    <div className={styles.playlistPart}>
+                        <img src={songs[0].image} alt="" className={styles.playlistImage} />
+                        <div className={styles.playlistText}>
+                            <h1>Title: {playlist.title}</h1>
+                            <h3>Description: {playlist.description}</h3>
+                            {currUser?.email === playlist?.userEmail && <Link to={`/playlist/${playlist.id}/edit`}><button className={`${styles.button_68}`} role="button">Edit</button></Link>}
+                        </div>
+                    </div>
+                    <hr className={styles.horizontalLine} />
+
+                    <div className={styles.audioList}>
+                        {songs.map((song, index) => (
+                            <div key={song.id}>
+                                <Song song={song} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <hr className={styles.horizontalLine} />
-
-            <div className={styles.audioList}>
-                {songs.map((song, index) => (
-                    <div>
-                    <div className={styles.audio_player} key={song.id}>
-                        <img src={song.image} alt="" className={styles.songImage} />
-                        <div className={styles.audioManage}>
-                            <H5AudioPlayer
-                                className={styles.audioPlayer}
-                                src={song.songFile}
-                                customVolumeControls={[]}
-                            />
-                        </div>
-                        <div className={styles.songInfo}>
-                            <h3>Name: {song.name}</h3>
-                            <h4>Singer: {song.singer}</h4>
-                        </div>
-                        {/* Additional Information (if needed) */}
-                        {/* {refAudio && `${Math.floor(refAudio.current.duration / 60)}:${Math.round(refAudio.current.duration - Math.floor(refAudio.current.duration / 60) * 60)}`} */}
-                    </div>
-
-                    </div>
-                ))}
-            </div>
-        </div>
-    )}
-</>
+            )}
+        </>
 
     )
 }

@@ -6,9 +6,10 @@ import Button from "../../components/button";
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { generateRandomString } from '../../tools/generateRandomStr';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 const Register = () => {
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -49,7 +50,6 @@ const Register = () => {
             return;
         }
 
-
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log(userCredential);
@@ -58,13 +58,14 @@ const Register = () => {
                     username: username,
                     email: email,
                     followers: [],
-                    avatarUrl: '',
-                    tokenId: auth.currentUser.getIdToken
+                    likedSongs: [],
+                    favoritePlaylists: [],
+                    avatarUrl: ''
                 });
                 // send user to the home page
             }).then((snapshot) => {
                 console.log("User created!");
-                navigate("/home");
+                navigate("/");
                 setLoading(false)
             })
             .catch((err) => {

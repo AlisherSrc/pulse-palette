@@ -96,46 +96,6 @@ const PlaylistEditor = () => {
 
     }, []);
 
-
-    const toggleEditMode = (id) => {
-        setSongs((currentSongs) => {
-            return currentSongs.map((song) => {
-                if (song.id === id) {
-                    setAudioEditName(song.name);
-                    setAudioEditSinger(song.singer);
-
-                    return { ...song, editMode: !song.editMode };
-                }
-                return { ...song, editMode: false };
-            });
-        });
-    }
-
-    const getAudioDuration = (file) => {
-        const audio = new Audio();
-        audio.src = URL.createObjectURL(file);
-
-        return new Promise((resolve) => {
-            audio.addEventListener('loadedmetadata', () => {
-                resolve(audio.duration);
-            });
-        });
-    };
-
-
-    const handleTitleChange = (e) => {
-        setTitle(e.target.value);
-    }
-
-    const handleDesChange = (e) => {
-        setDescription(e.target.value);
-    }
-
-    const handlePublicChange = (e) => {
-        setPublic(e.target.checked);
-    }
-
-
     const handleSongSubmit = (event) => {
         event.preventDefault();
 
@@ -308,6 +268,8 @@ const PlaylistEditor = () => {
 
     }
 
+
+
     const playlistDelete = async () => {
         await deleteDoc(doc(db, "playlist", id));
 
@@ -326,6 +288,34 @@ const PlaylistEditor = () => {
             console.log(error);
         }
     }
+
+    const toggleEditMode = (id) => {
+        setSongs((currentSongs) => {
+            return currentSongs.map((song) => {
+                if (song.id === id) {
+                    setAudioEditName(song.name);
+                    setAudioEditSinger(song.singer);
+
+                    return { ...song, editMode: !song.editMode };
+                }
+                return { ...song, editMode: false };
+            });
+        });
+    }
+
+
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+    }
+
+    const handleDesChange = (e) => {
+        setDescription(e.target.value);
+    }
+
+    const handlePublicChange = (e) => {
+        setPublic(e.target.checked);
+    }
+
 
     const handleEditAudioUpload = (event) => {
         const file = event.target.files[0];
