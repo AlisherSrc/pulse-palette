@@ -1,12 +1,13 @@
 import styles from './register.module.css';
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import Button from "../../components/button";
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { generateRandomString } from '../../tools/generateRandomStr';
 import { Link,useNavigate } from 'react-router-dom';
+import { Context } from '../../App';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -21,6 +22,8 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
 
     const [weakPasswordErr,setWeakPasswordErr] = useState(false);
+
+    const {setCustomUser} = useContext(Context);
 
     const auth = getAuth();
 
@@ -54,6 +57,16 @@ const Register = () => {
             .then((userCredential) => {
                 console.log(userCredential);
                 
+                // Set custom user to use it throughout the app
+                setCustomUser({
+                    username: username,
+                    email: email,
+                    followers: [],
+                    likedSongs: [],
+                    favoritePlaylists: [],
+                    avatarUrl: ''
+                });
+
                 return setDoc(doc(db, "user", `${username}${generateRandomString(16)}`),{
                     username: username,
                     email: email,
