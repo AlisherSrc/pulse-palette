@@ -20,6 +20,7 @@ const Playlist = () => {
     const [loading, setLoading] = useState(true);
     const [currUser, setCurrUser] = useState(null);
 
+
     const auth = getAuth();
     const [likedSongs,likedSongsLoading] = useGetUserLikedDocs("song");
 
@@ -49,9 +50,10 @@ const Playlist = () => {
         // Check if the playlist is specific cased
 
         if(id === 'liked'){
-            setPlaylist({title: "Your liked songs!",description: "There are songs that you like"})
+            setPlaylist({title: "Your liked songs!",description: "There are songs that you like",email: auth.currentUser.email})
             if(!likedSongsLoading){
                 setSongs(likedSongs);
+                console.log("Liked:",likedSongs);
                 setLoading(false);
             } 
             console.log(likedSongsLoading)

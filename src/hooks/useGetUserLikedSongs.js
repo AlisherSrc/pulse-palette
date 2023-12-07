@@ -19,35 +19,37 @@ const useGetUserLikedDocs = (docName) => {
         const getDocuments = async () => {
             try {
                 setLoading(true);
-
-                if(filterArr.length === 0){
-                    console.log("Array is empty!")
+    
+                if (filterArr.length === 0) {
+                    console.log("Array is empty!");
                     setLikedDocs([]);
                     setLoading(false);
                     return;
                 }
+    
                 const q = query(collection(db, docName), where(documentId(), 'in', filterArr));
-
-                const docs = await getDocs(q);
-
-                docs.forEach((document) => {
-                    setLikedDocs([...likedDocs,
-                    {
-                        id: document.id,
-                        ...document.data()
-                    }]);
-                })
-
-                setLoading(false);
+                const querySnapshot = await getDocs(q);
+                
+                // Create an array from the query results
+                const newLikedDocs = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+    
+                // Update the state once with all new documents
+                setLikedDocs(newLikedDocs);
             } catch (error) {
-                console.log(error);
+                console.error(error);
+            } finally {
+                setLoading(false);
             }
-        }
-
+        };
+    
         getDocuments();
-    }, [customUser,docName]);
-
-    return [likedDocs,loading];
+    }, [customUser, docName]); // Dependencies
+    
+    console.log("LikedDocs", likedDocs);
+    return [likedDocs, loading];
 }
 
 
