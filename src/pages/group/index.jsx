@@ -9,6 +9,7 @@ import Card from '../../components/card';
 import useGetUserPlaylists from '../../hooks/useGetUserPlaylists';
 import { Context } from '../../App';
 
+
 const Group = () => {
     const { id } = useParams();
     const [playlists, setPlaylists] = useState([]);
@@ -75,12 +76,13 @@ const Group = () => {
             {loading ? <p>Loading...</p> :
 
                 <div className={`${styles.main}`}>
-                    <div className={`${styles.groupPart}`}>
-                        <img src={playlists[0].imageUrl} alt="" />
+                    {playlists.length === 0 ? <p>This group is empty!</p> : <div className={`${styles.groupPart}`}>
+                        <img src={playlists[0]?.imageUrl} alt="playlist image" />
                         <div className={`${styles.groupText}`}>
                             <h1>{group.title}</h1>
                         </div>
-                    </div>
+                    </div>}
+
                     <hr className={styles.horizontalLine} />
 
                     <div className={`${styles.playlists}`}>
@@ -90,7 +92,9 @@ const Group = () => {
                             </div>
                         ))}
                     </div>
-                </div>}
+                </div>
+                
+                }
         </>
     );
 }
