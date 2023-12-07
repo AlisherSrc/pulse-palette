@@ -75,7 +75,7 @@ const Profile = () => {
                 <div className={`${styles.playlists}`}>
                     {/* Still undefined when click*, address this issue by providing query or something to do with it */}
                     {!loading ? <Group title="All Playlists" isUsersPlaylists inputPlaylists={[likedPlaylists,...userPlaylists]} /> : "Loading"}
-                    {<Group title="Favorites" isUsersFavorites />}
+                    {/* {<Group title="Favorites" isUsersFavorites />} */}
                 </div>
             </div>
 
