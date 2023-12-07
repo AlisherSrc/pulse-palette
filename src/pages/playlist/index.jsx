@@ -10,6 +10,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import { getAuth } from 'firebase/auth';
 import heart from '../../images/heart.svg';
 import Song from '../../components/song';
+import useGetUserLikedDocs from '../../hooks/useGetUserLikedSongs';
 
 const Playlist = () => {
     const { id } = useParams();
@@ -20,6 +21,7 @@ const Playlist = () => {
     const [currUser, setCurrUser] = useState(null);
 
     const auth = getAuth();
+    const [likedSongs,likedSongsLoading] = useGetUserLikedDocs("song");
 
     useEffect(() => {
         if (auth.currentUser) {
@@ -46,10 +48,17 @@ const Playlist = () => {
         }
         // Check if the playlist is specific cased
 
-        
-        getSongs();
+        if(id === 'liked'){
+            setPlaylist({title: "Your liked songs!",description: "There are songs that you like"})
+            if(!likedSongsLoading){
+                setSongs(likedSongs);
+                setLoading(false);
+            } 
+            console.log(likedSongsLoading)
+        }
+        else getSongs(); 
 
-    }, []);
+    }, [likedSongs,currUser,likedSongsLoading,id]);
 
 
 
@@ -61,7 +70,7 @@ const Playlist = () => {
             ) : (
                 <div className={styles.main}>
                     <div className={styles.playlistPart}>
-                        <img src={songs[0].image} alt="" className={styles.playlistImage} />
+                        <img src={songs[0]?.image ?? "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt="" className={styles.playlistImage} />
                         <div className={styles.playlistText}>
                             <h1>Title: {playlist.title}</h1>
                             <h3>Description: {playlist.description}</h3>
@@ -71,6 +80,7 @@ const Playlist = () => {
                     <hr className={styles.horizontalLine} />
 
                     <div className={styles.audioList}>
+                        {songs.length === 0 && <p>Your playlist is empty!</p>}
                         {songs.map((song, index) => (
                             <div key={song.id}>
                                 <Song song={song} />
