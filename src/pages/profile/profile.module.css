@@ -80,7 +80,16 @@ body {
   text-align: left;
   padding-left: 5%;
 }
+.avatar {
+  border-radius: 50%;
+  transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+  cursor: pointer; 
+}
 
+.avatar:hover {
+  transform: scale(1.1); /* Slightly scale up the avatar on hover */
+
+}
 @media (max-width: 400px) {
   .profilePart button {
     position: absolute;

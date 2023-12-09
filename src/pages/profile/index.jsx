@@ -10,16 +10,15 @@ import { Button } from 'antd';
 import { Context } from "../../App";
 import useGetUserPlaylists from "../../hooks/useGetUserPlaylists";
 import useTurnDocIdsIntoDocs from "../../hooks/useTurnDocIdsToDocs";
-// import { Group } from "antd/es/avatar";
-
+import { Link } from "react-router-dom";
 
 const Profile = () => {
     const [isAuth, setisAuth] = useState(false);
     const [currUser, setCurrUser] = useState(null);
 
-    const [userPlaylists,loading,error] = useGetUserPlaylists();
+    const [userPlaylists, loading, error] = useGetUserPlaylists();
 
-    const {setCustomUser} = useContext(Context);
+    const { setCustomUser } = useContext(Context);
 
     const nav = useNavigate();
 
@@ -32,21 +31,21 @@ const Profile = () => {
         description: "Here you can see all your favorite songs!"
     }
 
-    const [docs] = useTurnDocIdsIntoDocs([["My first auth playlist oM1Q3Chvp0Y9JXKV"],"playlist"]);
+    const [docs] = useTurnDocIdsIntoDocs([["My first auth playlist oM1Q3Chvp0Y9JXKV"], "playlist"]);
     console.log(docs);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth,async (user) => {
-            if(user){
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
                 setCurrUser(user);
                 setisAuth(true);
 
-                const q = query(collection(db,"user"),where("email",'==',user.email));
+                const q = query(collection(db, "user"), where("email", '==', user.email));
                 const userDoc = await getDocs(q);
                 userDoc.forEach((user) => {
-                    setCustomUser({id:user.id,...user.data()})
+                    setCustomUser({ id: user.id, ...user.data() })
                 })
-            }else{
+            } else {
                 setisAuth(false);
             }
         });
@@ -65,7 +64,9 @@ const Profile = () => {
         {isAuth ?
             <div className={`${styles.body}`}>
                 <div className={`${styles.profilePart}`}>
-                    <img src="https://www.vippng.com/png/full/363-3631840_profile-icon-png-profile-icon-png-white-transparent.png" alt="" width='160px' />
+                    <Link to="/settings">
+                        <img className={`${styles.avatar}`} src={currUser?.photoURL ?? "https://www.vippng.com/png/full/363-3631840_profile-icon-png-profile-icon-png-white-transparent.png"} alt="avatar" width='160px' />
+                    </Link>
                     <div className={`${styles.userData}`}>
                         <h3>Profile</h3>
                         <h2>Email: {currUser.email}</h2>
@@ -74,7 +75,7 @@ const Profile = () => {
                 </div>
                 <div className={`${styles.playlists}`}>
                     {/* Still undefined when click*, address this issue by providing query or something to do with it */}
-                    {!loading ? <Group title="All Playlists" isUsersPlaylists inputPlaylists={[likedPlaylists,...userPlaylists]} /> : "Loading"}
+                    {!loading ? <Group title="All Playlists" isUsersPlaylists inputPlaylists={[likedPlaylists, ...userPlaylists]} /> : "Loading"}
                     {/* {<Group title="Favorites" isUsersFavorites />} */}
                 </div>
             </div>

@@ -64,8 +64,10 @@ const PlaylistEditor = () => {
 
 
                 const playlistDoc = await getDoc(doc(db, "playlist", id));
-                if (auth.currentUser.email !== playlistDoc.data().userEmail) {
+                
+                if (!playlistDoc.exists || auth.currentUser?.email !== playlistDoc.data().userEmail) {
                     alert("You have no access to edit this playlist");
+                    navigate('/'); // Redirect them to a safe location
                     return;
                 }
 

@@ -10,8 +10,10 @@ import { useContext, useEffect, useState } from 'react';
 import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { Context } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 const Song = (props) => {
+    const navigate = useNavigate();
     const [liked, setLiked] = useState(false);
 
     const { customUser } = useContext(Context);
@@ -19,19 +21,26 @@ const Song = (props) => {
     const { song } = props;
     // Check if the song is already liked 
     useEffect(() => {
-        setLiked(customUser.likedSongs.includes(song.id));
-    },[customUser.likedSongs,song.id])
+
+        if (customUser && customUser?.likedSongs) setLiked(customUser?.likedSongs.includes(song.id));
+
+    }, [customUser.likedSongs, song.id])
 
     const handleLike = async (songId) => {
-        console.log(songId);
-    
+        console.log(!customUser, customUser?.likedSongs);
+
+        if (!customUser || !Array.isArray(customUser?.likedSongs)){
+            navigate('/login');
+            return;
+        }
+
         // Optimistic update
         setLiked(currentLiked => !currentLiked);
-    
+
         try {
             const userRef = doc(db, 'user', customUser.id);
             let updatedLikedSongs;
-    
+
             if (!liked) {
                 // If currently not liked, add the song
                 updatedLikedSongs = [...customUser.likedSongs, songId];
@@ -39,9 +48,9 @@ const Song = (props) => {
                 // If currently liked, remove the song
                 updatedLikedSongs = customUser.likedSongs.filter((song) => song !== songId);
             }
-    
+
             await updateDoc(userRef, { likedSongs: updatedLikedSongs });
-    
+
             console.log(liked ? "Unliked!" : "Liked!");
         } catch (error) {
             console.error("Error updating liked songs:", error);

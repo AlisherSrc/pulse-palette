@@ -1,5 +1,5 @@
 import styles from './playlist.module.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { db, storage } from '../../config/firebase';
 import { useEffect, useRef, useState } from 'react';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
@@ -12,7 +12,10 @@ import heart from '../../images/heart.svg';
 import Song from '../../components/song';
 import useGetUserLikedDocs from '../../hooks/useGetUserLikedSongs';
 
+
 const Playlist = () => {
+    const navigate = useNavigate();
+
     const { id } = useParams();
     const [songs, setSongs] = useState([]);
     const refAudio = useRef(null);
@@ -22,12 +25,15 @@ const Playlist = () => {
 
 
     const auth = getAuth();
-    const [likedSongs,likedSongsLoading] = useGetUserLikedDocs("song");
+    const [likedSongs, likedSongsLoading] = useGetUserLikedDocs("song");
 
     useEffect(() => {
         if (auth.currentUser) {
             setCurrUser(auth.currentUser);
-        } else console.log("Not auth")
+        } else {
+            // navigate("/login");
+            console.log("Not reg")
+        }
     }, [auth])
 
     useEffect(() => {
@@ -49,18 +55,18 @@ const Playlist = () => {
         }
         // Check if the playlist is specific cased
 
-        if(id === 'liked'){
-            setPlaylist({title: "Your liked songs!",description: "There are songs that you like",email: auth.currentUser.email})
-            if(!likedSongsLoading){
+        if (id === 'liked') {
+            setPlaylist({ title: "Your liked songs!", description: "There are songs that you like", email: auth.currentUser.email })
+            if (!likedSongsLoading) {
                 setSongs(likedSongs);
-                console.log("Liked:",likedSongs);
+                console.log("Liked:", likedSongs);
                 setLoading(false);
-            } 
+            }
             console.log(likedSongsLoading)
         }
-        else getSongs(); 
+        else getSongs();
 
-    }, [likedSongs,currUser,likedSongsLoading,id]);
+    }, [likedSongs, currUser, likedSongsLoading, id]);
 
 
 
@@ -76,7 +82,11 @@ const Playlist = () => {
                         <div className={styles.playlistText}>
                             <h1>Title: {playlist.title}</h1>
                             <h3>Description: {playlist.description}</h3>
-                            {currUser?.email === playlist?.userEmail && <Link to={`/playlist/${playlist.id}/edit`}><button className={`${styles.button_68}`} role="button">Edit</button></Link>}
+                            {currUser && currUser.email === playlist?.userEmail && (
+                                <Link to={`/playlist/${playlist.id}/edit`}>
+                                    <button className={`${styles.button_68}`} role="button">Edit</button>
+                                </Link>
+                            )}
                         </div>
                     </div>
                     <hr className={styles.horizontalLine} />
