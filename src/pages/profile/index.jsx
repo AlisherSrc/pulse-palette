@@ -18,7 +18,7 @@ const Profile = () => {
 
     const [userPlaylists, loading, error] = useGetUserPlaylists();
 
-    const { setCustomUser } = useContext(Context);
+    const { customUser,setCustomUser } = useContext(Context);
 
     const nav = useNavigate();
 
@@ -65,11 +65,11 @@ const Profile = () => {
             <div className={`${styles.body}`}>
                 <div className={`${styles.profilePart}`}>
                     <Link to="/settings">
-                        <img className={`${styles.avatar}`} src={currUser?.photoURL ?? "https://www.vippng.com/png/full/363-3631840_profile-icon-png-profile-icon-png-white-transparent.png"} alt="avatar" width='160px' />
+                        <img className={`${styles.avatar}`} src={customUser?.avatarUrl ?? "https://www.vippng.com/png/full/363-3631840_profile-icon-png-profile-icon-png-white-transparent.png"} alt="avatar" width='160px' height='160px' />
                     </Link>
                     <div className={`${styles.userData}`}>
                         <h3>Profile</h3>
-                        <h2>Email: {currUser.email}</h2>
+                        <h2>{customUser.username}</h2>
                         <Button danger ghost onClick={signOut}>Sign Out</Button>
                     </div>
                 </div>

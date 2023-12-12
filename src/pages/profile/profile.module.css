@@ -11,9 +11,7 @@ body {
   width: 100%;
   margin-bottom: 5%;
 }
-.profilePart img {
-  height: 100%;
-}
+
 .playlists a {
 
 }
@@ -81,6 +79,8 @@ body {
   padding-left: 5%;
 }
 .avatar {
+  height: 160px;
+  width: 160px;
   border-radius: 50%;
   transition: transform 0.3s ease; /* Smooth transition for the hover effect */
   cursor: pointer; 
@@ -88,8 +88,8 @@ body {
 
 .avatar:hover {
   transform: scale(1.1); /* Slightly scale up the avatar on hover */
-
 }
+
 @media (max-width: 400px) {
   .profilePart button {
     position: absolute;
