@@ -43,7 +43,6 @@ const Navbar = () => {
         </nav>
 
     </>
-
     )
     // return (<nav className={`${styles.navbar_section}`}>
     //     <div className={`${styles.navbar_container}`}>

@@ -1,4 +1,4 @@
-export function resizeAndConvertImageToWebP(file, maxWidth, maxHeight, quality, callback) {
+export function resizeImage(file, maxWidth, maxHeight, quality, callback) {
     const reader = new FileReader();
     reader.onload = (event) => {
         const img = new Image();
@@ -7,14 +7,15 @@ export function resizeAndConvertImageToWebP(file, maxWidth, maxHeight, quality, 
             let width = img.width;
             let height = img.height;
 
+            // Calculate the new width and height
             if (width > height) {
                 if (width > maxWidth) {
-                    height *= maxWidth / width;
+                    height = Math.round((height * maxWidth) / width);
                     width = maxWidth;
                 }
             } else {
                 if (height > maxHeight) {
-                    width *= maxHeight / height;
+                    width = Math.round((width * maxHeight) / height);
                     height = maxHeight;
                 }
             }
@@ -24,9 +25,12 @@ export function resizeAndConvertImageToWebP(file, maxWidth, maxHeight, quality, 
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, height);
 
+            // Use the MIME type of the input file
+            const mimeType = file.type;
+
             canvas.toBlob((blob) => {
                 callback(blob);
-            }, 'image/webp', quality);
+            }, mimeType, quality);
         };
         img.src = event.target.result;
     };

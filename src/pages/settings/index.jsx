@@ -7,7 +7,7 @@ import { db, storage } from '../../config/firebase';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { generateRandomString } from '../../tools/generateRandomStr';
-import {resizeAndConvertImageToWebP } from '../../tools/webPConverter';
+import { resizeImage } from '../../tools/resizeImage';
 
 const Settings = () => {
 
@@ -44,14 +44,14 @@ const Settings = () => {
             const avatarRef = ref(storage, newAvatarFilename);
 
             // Convert the image to WebP and then upload
-            resizeAndConvertImageToWebP(image,1920,1080, 0.8, async (webpBlob) => {
-                console.log(webpBlob)
+            resizeImage(image, 1920, 1080, 1, async (imageOut) => {
+                console.log(imageOut)
                 try {
-                    const snapshot = await uploadBytes(avatarRef, webpBlob);
+                    const snapshot = await uploadBytes(avatarRef, imageOut);
                     console.log("Avatar has been uploaded!");
                     const url = await getDownloadURL(snapshot.ref);
-                    console.log("url: ",url);
-                    console.log("profile: ",profile);
+                    console.log("url: ", url);
+                    console.log("profile: ", profile);
                     await updateDoc(userRef, {
                         ...profile,
                         avatarUrl: url, // Update the profile with the new avatar URL

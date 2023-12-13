@@ -64,7 +64,7 @@ const Profile = () => {
         {isAuth ?
             <div className={`${styles.body}`}>
                 <div className={`${styles.profilePart}`}>
-                    <Link to="/settings">
+                    <Link className={styles.avatar_container} to="/settings">
                         <img className={`${styles.avatar}`} src={customUser?.avatarUrl ?? "https://www.vippng.com/png/full/363-3631840_profile-icon-png-profile-icon-png-white-transparent.png"} alt="avatar" width='160px' height='160px' />
                     </Link>
                     <div className={`${styles.userData}`}>

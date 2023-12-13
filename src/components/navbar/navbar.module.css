@@ -33,10 +33,11 @@
 .profile_icon {
     position: absolute;
     object-fit: cover;
-    width:100%;
+    width:auto;
     height: 100%;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .avatar_container{
     position: relative;
@@ -44,5 +45,5 @@
     overflow: hidden;
 
     width: 5rem;
-    height: 5rem;
+    height: 5rem;    
 }
