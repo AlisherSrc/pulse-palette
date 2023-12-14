@@ -80,8 +80,8 @@ const Playlist = () => {
                     <div className={styles.playlistPart}>
                         <img src={songs[0]?.image ?? "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt="" className={styles.playlistImage} />
                         <div className={styles.playlistText}>
-                            <h1>Title: {playlist.title}</h1>
-                            <h3>Description: {playlist.description}</h3>
+                            <h1>{playlist.title}</h1>
+                            <h3>{playlist.description}</h3>
                             {currUser && currUser.email === playlist?.userEmail && (
                                 <Link to={`/playlist/${playlist.id}/edit`}>
                                     <button className={`${styles.button_68}`} role="button">Edit</button>

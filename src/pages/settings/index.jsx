@@ -93,14 +93,9 @@ const Settings = () => {
 
     return <div className={`${styles.main}`}>
         <div className={`${styles.content}`}>
-            <div className={`${styles.left_side}`}>
-                <ul>
-                    <li>Edit profile</li>
-                </ul>
-            </div>
+        <h2>Edit profile</h2>
             <div className={`${styles.right_side}`}>
-                <h2>Edit profile</h2>
-                <div>
+                <div className={styles.profilePhoto}>
                     <p>Photo</p>
                     <div className={styles.profile_photo_container}>
                         <div className={styles.profile_photo} style={{ backgroundImage: `url(${profile.avatarPreview})` }}>
@@ -114,12 +109,12 @@ const Settings = () => {
                 </div>
                 <div className={styles.profile_fields}>
                     <label className={styles.field}>
-                        Username
+                        <p>Username</p>
                         {/* Name needs to correspond to the fields name in the backend */}
                         <input onChange={(e) => handleFieldsChange(e)} type='text' name='username' placeholder={customUser?.username ?? "username"} />
                     </label>
+                    <Button onClick={() => handleSubmit()} text="Submit" />
                 </div>
-                <Button onClick={() => handleSubmit()} text="Submit" />
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
-body {
-  width: 100%;
+.body {
   overflow-x: hidden;
+    margin: 0 4% 0 4%;
+
 }
 .profilePart {
-  margin-left: 2%;
   display: flex;
   margin-top: 2%;
   display: 37vh;
@@ -16,26 +16,30 @@ body {
 
 }
 .userData {
-  color: #000;
+  color: #ffffff;
   position: relative;
   margin-left: 4%;
 }
 .userData h3 {
-  color: #000;
-  margin-bottom: 5%;
+  margin-bottom: 30%;
 }
 .userData h2 {
-  color: #000;
   font-weight: 500;
 }
-
-.profilePart button {
+.buttons{
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: auto;
+}
+/* .profilePart button {
   position: absolute;
   bottom: 0;
   left: 0;
   width: auto;
   margin-left: unset;
-}
+} */
 
 .list {
   margin-top: 7%;
@@ -50,6 +54,7 @@ body {
 .playlists {
   display: flex;
   flex-flow: column;
+  width: 100%;
 }
 
 .playlist {
@@ -95,8 +100,8 @@ body {
 /* Make a mask */
 .avatar_container{
   position: relative;
-  height: 300px;
-  width: 300px;
+  height: 200px;
+  width: 200px;
   border-radius: 50%;
   border: 1px solid #000;
   overflow: hidden;

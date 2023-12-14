@@ -70,7 +70,11 @@ const Profile = () => {
                     <div className={`${styles.userData}`}>
                         <h3>Profile</h3>
                         <h2>{customUser.username}</h2>
+                        <div className={`${styles.buttons}`}>
                         <Button danger ghost onClick={signOut}>Sign Out</Button>
+                        <Link to="/settings"><Button edit ghost >Edit</Button></Link>
+                        </div>
+                        
                     </div>
                 </div>
                 <div className={`${styles.playlists}`}>

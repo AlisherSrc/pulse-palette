@@ -59,23 +59,32 @@ const Song = (props) => {
         }
     }
 
-    return <>
-        <div className={styles.audio_player} key={song.id}>
-            <img src={song.image} alt="" className={styles.songImage} />
-            <div className={styles.audioManage}>
-                <H5AudioPlayer
-                    className={styles.audioPlayer}
-                    src={song.songFile}
-                    customVolumeControls={[]}
-                />
-            </div>
-            <div className={styles.songInfo}>
-                <h3>Name: {song.name}</h3>
-                <h4>Singer: {song.singer}</h4>
-            </div>
-            <img className={styles.heart_icon} onClick={() => handleLike(song.id)} src={liked ? filledHeart : heart} />
+    return<>
+    <div className={styles.audio_player} key={song.id}>
+        <img src={song.image} alt="" className={styles.songImage} />
+        <div className={styles.songInfo}>
+            <h3>Name: {song.name}</h3>
+            <h4>Singer: {song.singer}</h4>
         </div>
-    </>
+        <div className={styles.audioManage}>
+            <H5AudioPlayer
+                className={styles.audioPlayer}
+                src={song.songFile}
+                customVolumeControls={[]}
+            />
+            
+        </div>
+        <div className={styles.verticalLine}></div>
+        <img
+            className={styles.heart_icon}
+            onClick={() => handleLike(song.id)}
+            src={liked ? filledHeart : heart}
+            alt="Heart Icon"
+            title="Add to Favorites"
+        />
+    </div>
+</>
+
 }
 
 export default Song;

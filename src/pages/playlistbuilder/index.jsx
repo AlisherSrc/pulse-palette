@@ -231,7 +231,7 @@ const PlaylistBuilder = () => {
                                 <input type="text" placeholder="Singer/Group" onChange={handleSingerChange} />
                             </div>
                             <div className={styles.audioFiles}>
-                                <div className={styles.image}>
+                                <div title="Add Image" className={styles.image}>
                                     <label htmlFor="audioImage">
                                         <img
                                             src={upload_image}
@@ -244,7 +244,7 @@ const PlaylistBuilder = () => {
                                     </div>
                                 </div>
 
-                                <div className={styles.audio}>
+                                <div title="Add Audio" className={styles.audio}>
                                     <label htmlFor="audioFile">
                                         <img
                                             src={upload_music}
@@ -273,27 +273,23 @@ const PlaylistBuilder = () => {
                             </div>
                             <hr />
                             <div className={`${styles.songDisplayed__data}`}>
-                                <img src={song.imageUrl} />
+                                <img src={song.imageUrl} className={styles.songImage}/>
 
-                                <div className={styles.songDisplayed__data__media}>
-                                    <div className={styles.songDisplayed__data__info}>
-                                        <p className={styles.songName}>{song.name}</p>
-                                        <p className={styles.author}>{song.singer}</p>
-                                    </div>
-                                    <div className={styles.h5Player}>
-                                        <H5AudioPlayer
-                                            className={styles.audioPlayer}
-                                            src={song.songUrl}
-                                            customVolumeControls={[]}
-                                            id="h5Style"
-                                            hasDefaultKeyBindings={false}
-                                        />
-                                    </div>
+                                <div className={styles.songInfo}>
+                                    <h3 className={styles.songName}>{song.name}</h3>
+                                    <h4 className={styles.author}>{song.singer}</h4>
+                                </div>
+                                <div className={styles.audioManage}>
+                                    <H5AudioPlayer
+                                        className={styles.audioPlayer}
+                                        src={song.songUrl}
+                                        customVolumeControls={[]}
+                                    />
+                                </div>
                                     {/*<audio preload controls>*/}
                                     {/*    <source src={song.songUrl} type="audio/mp3" />*/}
                                     {/*    Your browser does not support the audio element.*/}
                                     {/*</audio>*/}
-                                </div>
                             </div>
                         </div>
                     ))}
@@ -301,8 +297,8 @@ const PlaylistBuilder = () => {
                     {songs.length !== 0 && console.log(songs[0].imageUrl)}
                 </div>
                 <div className={`${styles.main_buttons}`}>
-                    <Button text="Create" onClick={createPlaylist} medium />
-                    <Button text="Clear" medium danger onClick={clearAllFields} />
+                    <Button text="Create"  onClick={createPlaylist} medium />
+                    <Button text="Clear" medium color="rgb(181, 56, 56)" onClick={clearAllFields} />
                 </div>
                 <ToastContainer
                     position="top-center"

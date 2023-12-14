@@ -1,9 +1,10 @@
 .main{
-    margin: 0px 5%;
+    margin: 0 4% 0 4%;
 }
 
 .content{
     display: flex;
+    flex-direction: column;
     width: 100%;
     gap: 15%;
 }
@@ -20,17 +21,26 @@
     font-size: 1.5rem;
 }
 
-.left_side ul li:hover{
-    /* text-decoration: underline; */
-    color: aliceblue;
-    cursor: pointer;
-}
-
 .right_side{
+    display: flex;
+    text-align: center;
 }
 
-
-
+.right_side Button{
+    width: 100px;
+    height: 20%;
+    color: #ffffff;
+}
+.profilePhoto{
+    display: flex;
+    flex-direction: column;
+    
+}
+.profilePhoto p{
+    margin-right: 45%;
+    margin-bottom: 10%;
+    color: #ffffff;
+}
 .profile_photo_container {
     display: flex;
     align-items: center;
@@ -69,7 +79,9 @@
 
 .profile_fields{
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
+    margin-left: 10%;
+    align-items: center;
 }
 
 .field{
@@ -78,4 +90,10 @@
     align-items: left;
     gap: 10px;
     color: #e9e9e9;
+}
+.field p{
+    color: #ffffff;
+}
+.field input{
+    width: 100%;
 }

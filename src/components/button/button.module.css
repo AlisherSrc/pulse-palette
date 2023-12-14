@@ -7,9 +7,10 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  border:1px solid grey;
+  border: none;
   border-radius:10px;
   font-weight:800;
   background-color: var(--ash-gray);
   cursor: pointer;
+  border: 1px solid #000000;
 }

@@ -2,15 +2,13 @@
     display: flex;
     position: relative;
     flex-flow: column;
-    width: 90%;
+    width: 100%;
     height: 100%;
     backdrop-filter: blur(10px);
-    border-radius: 7px;
-    gap: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    background-color: rgb(74, 111, 62);
+    background-color: #898121;
     color: #ffffff;
-    border: 1px solid #4ecb71;
     overflow: hidden;
     transition: transform 0.3s ease;
 }
@@ -23,6 +21,7 @@
 
 .card_text_container {
     display: flex;
+    margin-left: 4%;
 }
 
 .card_text {
@@ -55,6 +54,7 @@
     height: 17rem;
     overflow: hidden;
     border-radius: 7px 7px 0px 0px;
+    height: 65%;
 }
 
 .img_container img {

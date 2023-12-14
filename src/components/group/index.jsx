@@ -54,29 +54,29 @@ const Group = (props) => {
 
     return (
         <div className={styles.group}>
-    <div className={styles.group_text}>
-        <h3>{title}</h3>
-        {isUsersPlaylists && <Link to={`/group/created`}>show all</Link>}
-        {isUsersFavorites && <Link to={`/group/favorites`}>show all</Link>}
-        {!isUsersFavorites && !isUsersPlaylists && (
-            <Link to={groupID ? `/group/${groupID}` : `/group/${title}`}>show all</Link>
-        )}
-    </div>
+            <div className={styles.group_text}>
+                <h3>{title}</h3>
+                {isUsersPlaylists && <Link to={`/group/created`}>show all</Link>}
+                {isUsersFavorites && <Link to={`/group/favorites`}>show all</Link>}
+                {!isUsersFavorites && !isUsersPlaylists && (
+                    <Link to={groupID ? `/group/${groupID}` : `/group/${title}`}>show all</Link>
+                )}
+            </div>
 
-    <div className={styles.cards}>
-        {playlists.length !== 0 &&
-            playlists.slice(0, numShowed).map((playlist) => (
-                <div key={playlist.id} className={styles.card_container}>
-                    <Card
-                        id={playlist.id}
-                        imageUrl={playlist.imageUrl}
-                        title={playlist.title}
-                        description={playlist.description}
-                    />
-                </div>
-            ))}
-    </div>
-</div>)
-}
+            <div className={styles.cards}>
+                {playlists.length !== 0 &&
+                    playlists.slice(0, numShowed).map((playlist) => (
+                        <div key={playlist.id} className={styles.card_container}>
+                            <Card
+                                id={playlist.id}
+                                imageUrl={playlist.imageUrl}
+                                title={playlist.title}
+                                description={playlist.description}
+                            />
+                        </div>
+                    ))}
+            </div>
+        </div>)
+        }
 
 export default Group;

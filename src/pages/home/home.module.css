@@ -2,6 +2,10 @@
     display: flex;
     flex-flow: column;
     gap: 50px;
+    margin: 0 4% 0 4%;
+
+    margin-top: 5%;
+    
 }
 .title{
     justify-content: center;

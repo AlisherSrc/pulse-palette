@@ -76,7 +76,8 @@ const Group = () => {
             {loading ? <p>Loading...</p> :
 
                 <div className={`${styles.main}`}>
-                    {playlists.length === 0 ? <p>This group is empty!</p> : <div className={`${styles.groupPart}`}>
+                    {playlists.length === 0 ? <p>This group is empty!</p> : 
+                    <div className={`${styles.groupPart}`}>
                         <img src={playlists[0]?.imageUrl} alt="playlist image" />
                         <div className={`${styles.groupText}`}>
                             <h1>{group.title}</h1>
