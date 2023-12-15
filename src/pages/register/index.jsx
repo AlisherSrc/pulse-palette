@@ -98,9 +98,16 @@ const Register = () => {
     return <>
         <div className={`${styles.form_container}`}>
             <div className={`${styles.form}`}>
+                <h1>Start for free</h1>
+                <div className={styles.google}>
+                    <img src="https://www.svgrepo.com/show/303108/google-icon-logo.svg" width="20px" alt="" />
+                    <h3>Sign up with Google</h3>
+                </div>
+                <div className={styles.google}>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/archive/b/b8/20220821121038%212021_Facebook_icon.svg/120px-2021_Facebook_icon.svg.png" width="20px" alt="" />
+                    <h3>Sign up with Facebook</h3>
+                </div>
                 <hr />
-
-                <h1>Sign up and start!</h1>
                 <div className={styles.socialSignUp}>
                     {/* Social sign up */}
                 </div>
@@ -110,14 +117,13 @@ const Register = () => {
                         <input type="text" placeholder="username" onChange={(e) => setUsername(e.target.value)} />
                     </div>
                     <div className={`${styles.form_block}`}>
-                        <label>Please, provide your active email</label>
+                        <label>Email</label>
                         <input type="text" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div className={`${styles.form_block}`}>
-                        <label>Choose a strong password</label>
+                        <label>Password</label>
                         <div className={`${styles.password}`}>
                             <input type={isPasswordShowed ? "text" : "password"} placeholder="password" onChange={(e) => setPassword(e.target.value)} />
-                            <input type="button" value="show" onClick={() => setPasswordShowed(!isPasswordShowed)} />
                         </div>
                     </div>
                     <div className={`${styles.form_block}`}>
@@ -129,7 +135,10 @@ const Register = () => {
                     {loading && "Loading..."}
                 </form>
                 <hr />
-                <p>Have an account? <Link to="/login">Log in!</Link></p>
+                <div className={styles.haveAccount}>
+                <p>Have an account? </p>
+                <Link to="/login"><a href="">Log in!</a></Link>
+                </div>
             </div>
         </div>
     </>
