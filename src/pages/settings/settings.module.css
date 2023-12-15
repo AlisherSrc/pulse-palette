@@ -1,0 +1,99 @@
+.main{
+    margin: 0 4% 0 4%;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15%;
+}
+
+.left_side{
+
+}
+
+.left_side ul{
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+    list-style: none;
+    font-size: 1.5rem;
+}
+
+.right_side{
+    display: flex;
+    text-align: center;
+}
+
+.right_side Button{
+    width: 100px;
+    height: 20%;
+    color: #ffffff;
+}
+.profilePhoto{
+    display: flex;
+    flex-direction: column;
+    
+}
+.profilePhoto p{
+    margin-right: 45%;
+    margin-bottom: 10%;
+    color: #ffffff;
+}
+.profile_photo_container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust the space between the photo and the button */
+}
+
+.profile_photo {
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; /* Make it round */
+    background-color: #ccc; /* Placeholder color */
+    
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    font-size: 2.5rem; /* The size of the initial */
+    font-weight: bold;
+}
+
+.change_button {
+    padding: 5px 10px; /* Padding inside the button */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Slightly round corners */
+    cursor: pointer;
+    background-color: #e9e9e9; /* Light grey background */
+    color: #333; /* Button text color */
+}
+
+.change_button:hover {
+    background-color: #d0d0d0; /* Darker grey on hover */
+}
+
+.profile_fields{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    align-items: center;
+}
+
+.field{
+    display: flex;
+    flex-flow: column;
+    align-items: left;
+    gap: 10px;
+    color: #e9e9e9;
+}
+.field p{
+    color: #ffffff;
+}
+.field input{
+    width: 100%;
+}

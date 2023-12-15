@@ -1,21 +1,75 @@
-.navbar_container{
+.navbar_container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 90%;
-}
-
-.navbar_section{
-    width: 99%;
+    width: 100%;
+    margin: 0 4% 0 4%;
+  }
+  
+  .navbar_section {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.navbar_buttons{
+  }
+  
+  .navbar_buttons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     justify-self: flex-end;
     align-items: center;
     justify-content: center;
-}
+  }
+  
+  .navbar_buttons button {
+    margin-top: unset;
+    color: #F7F1E5;
+     }
+  
+  .logo {
+    max-width: 100%;
+  }
+  
+  .profile_icon {
+    position: absolute;
+    object-fit: cover;
+    width: auto;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .avatar_container {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+  .createPlaylist{
+    margin-right: 40px;
+  }
+  .login{
+    border: none;
+  }
+  
+  /* Media Query for screens smaller than 768px */
+  @media screen and (max-width: 768px) {
+    .navbar_container {
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 0;
+    }
+  
+    .navbar_buttons {
+      flex-direction: row;
+      gap: 10px;
+    }
+  
+    .avatar_container {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+  

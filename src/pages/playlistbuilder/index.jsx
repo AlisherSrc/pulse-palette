@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./playlistBuilder.module.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
@@ -6,17 +6,21 @@ import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
 import upload_image from '../../../public/image-upload.svg';
 import upload_music from '../../../public/music-upload.svg';
+import trashcan from '../../images/trashcan.svg';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import H5AudioPlayer  from 'react-h5-audio-player';
+import H5AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
 import Button from "../../components/button";
+import { getAuth } from "firebase/auth";
 
 // It should display user's not uploaded songs, we can do so by the userID field of songs
 const PlaylistBuilder = () => {
+    // User
+    const [currUser, setUser] = useState();
     // Song fields
     const [audioName, setAudioName] = useState('');
     const [imageFile, setImageFile] = useState(null);
@@ -29,9 +33,18 @@ const PlaylistBuilder = () => {
 
     const [songs, setSongs] = useState([]); //list of files
 
-    const [isAudioLoading,setAudioLoading] = useState(false);
+    const [isAudioLoading, setAudioLoading] = useState(false);
 
     const songFormRef = useRef();
+    const playlistFormRef = useRef();
+    const auth = getAuth();
+    // User
+
+
+
+    useEffect(() => {
+        setUser(auth.currentUser);
+    }, [])
 
 
     const getAudioDuration = (file) => {
@@ -58,7 +71,7 @@ const PlaylistBuilder = () => {
 
     const createPlaylist = async () => {
 
-        if(!title || !description || songs.length === 0){
+        if (!title || !description || songs.length === 0) {
             toast("Please,fill all feilds and upload at least 1 audio file")
             return;
         }
@@ -74,7 +87,8 @@ const PlaylistBuilder = () => {
                     name: song.name,
                     playlistID: playlistID,
                     singer: song.singer,
-                    songFile: song.songUrl
+                    songFile: song.songUrl,
+                    userEmail: currUser.email
                 });
 
                 console.log("Song created:", song.name);
@@ -90,7 +104,8 @@ const PlaylistBuilder = () => {
             public: isPublic,
             title: title,
             createdDate: Timestamp.now(),
-            isPopular: false
+            isPopular: false,
+            userEmail: currUser.email
             // Later we need to add a userId to it
         }).then((snapshot) => {
             toast("Created!")
@@ -149,6 +164,18 @@ const PlaylistBuilder = () => {
         setAudioFile(null);
     }
 
+    const clearAllFields = () => {
+        setTitle('')
+        setDescription('');
+        setSongs([]);
+        songFormRef.current.reset();
+        playlistFormRef.current.reset();
+        setAudioName('');
+        setSinger('');
+        setImageFile(null);
+        setAudioFile(null);
+    }
+
     // Song:
     // image url
     // name string
@@ -188,7 +215,7 @@ const PlaylistBuilder = () => {
         <div className={`${styles.builder}`}>
             <div className={`${styles.builder_inner}`}>
                 <h2>Create your playlist</h2>
-                <form className={`${styles.playlistForm}`}>
+                <form className={`${styles.playlistForm}`} ref={playlistFormRef}>
                     <input type="text" placeholder="Title" onChange={handleTitleChange} />
                     <input type="text" placeholder="Short description" onChange={handleDesChange} />
                     <div className={`${styles.publicCheck}`}>
@@ -204,7 +231,7 @@ const PlaylistBuilder = () => {
                                 <input type="text" placeholder="Singer/Group" onChange={handleSingerChange} />
                             </div>
                             <div className={styles.audioFiles}>
-                                <div className={styles.image}>
+                                <div title="Add Image" className={styles.image}>
                                     <label htmlFor="audioImage">
                                         <img
                                             src={upload_image}
@@ -217,7 +244,7 @@ const PlaylistBuilder = () => {
                                     </div>
                                 </div>
 
-                                <div className={styles.audio}>
+                                <div title="Add Audio" className={styles.audio}>
                                     <label htmlFor="audioFile">
                                         <img
                                             src={upload_music}
@@ -230,46 +257,49 @@ const PlaylistBuilder = () => {
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                    <div className={styles.footer}>
-                        <button type="submit">Add a song</button>
-                    </div>
+                        </div>
+                        <div className={styles.footer}>
+                            <button type="submit">Add a song</button>
+                        </div>
                     </div>
                 </form>
                 <div className={`${styles.songs}`}>
                     {isAudioLoading && <p>Uploading...</p>}
                     {songs.length !== 0 && songs.map((song, i) => (
                         <div key={generateRandomString(16)} className={`${styles.songDisplayed}`}>
-                            <h3>{i + 1}</h3>
+                            <div className={`${styles.songDisplayed__top}`}>
+                                <h3>{i + 1}</h3>
+                                <img className={`${styles.delete_icon}`} src={trashcan} alt="delete" />
+                            </div>
                             <hr />
                             <div className={`${styles.songDisplayed__data}`}>
-                                <img src={song.imageUrl} />
+                                <img src={song.imageUrl} className={styles.songImage}/>
 
-                                <div className={styles.songDisplayed__data__media}>
-                                    <div className={styles.songDisplayed__data__info}>
-                                        <p className={styles.sonName}>{song.name}</p>
-                                        <p className={styles.author}>{song.singer}</p>
-                                    </div>
-                                    <div className={styles.h5Player}>
-                                        <H5AudioPlayer
-                                            className={styles.audioPlayer}
-                                            src={song.songUrl}
-                                            customVolumeControls={[]}
-                                            hasDefaultKeyBindings={false}
-                                        />
-                                    </div>
+                                <div className={styles.songInfo}>
+                                    <h3 className={styles.songName}>{song.name}</h3>
+                                    <h4 className={styles.author}>{song.singer}</h4>
+                                </div>
+                                <div className={styles.audioManage}>
+                                    <H5AudioPlayer
+                                        className={styles.audioPlayer}
+                                        src={song.songUrl}
+                                        customVolumeControls={[]}
+                                    />
+                                </div>
                                     {/*<audio preload controls>*/}
                                     {/*    <source src={song.songUrl} type="audio/mp3" />*/}
                                     {/*    Your browser does not support the audio element.*/}
                                     {/*</audio>*/}
-                                </div>
                             </div>
                         </div>
                     ))}
 
                     {songs.length !== 0 && console.log(songs[0].imageUrl)}
                 </div>
-                <Button text="Create" onClick={createPlaylist} medium />
+                <div className={`${styles.main_buttons}`}>
+                    <Button text="Create"  onClick={createPlaylist} medium />
+                    <Button text="Clear" medium color="rgb(181, 56, 56)" onClick={clearAllFields} />
+                </div>
                 <ToastContainer
                     position="top-center"
                     autoClose={5000}

@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../../components/button';
 import { Link, useNavigate } from 'react-router-dom';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 
 
 import styles from './login.module.css';
+import { Context } from '../../App';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 const Login = () => {
 
@@ -14,6 +17,9 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isPasswordShowed, setPasswordShowed] = useState(false);
+
+    const {setCustomUser} = useContext(Context);
+
     const auth = getAuth();
     const navigate = useNavigate();
 
@@ -28,7 +34,20 @@ const Login = () => {
             return;
         }
         
-        signInWithEmailAndPassword(auth,email,password).then((userCred) => {
+        signInWithEmailAndPassword(auth,email,password)
+        .then(async () => {
+            const q = query(collection(db,"user"),where("email",'==',email));
+
+            const user = await getDocs(q);
+
+            user.forEach((user) => {
+                setCustomUser({
+                    id: user.id,
+                    ...user.data()
+                })
+            });
+        })
+        .then(() => {
             console.log("Logged in!")
             setLoginLoading(false);
             navigate("/profile");
@@ -44,7 +63,7 @@ const Login = () => {
                 <div className={`${styles.form}`}>
                     <hr />
 
-                    <h1>Sign up and start!</h1>
+                    <h1>Login</h1>
                     <div className={styles.socialSignUp}>
                         {/* Social sign up */}
                     </div>
@@ -60,7 +79,7 @@ const Login = () => {
                                 <input type="button" value="show" onClick={() => setPasswordShowed(!isPasswordShowed)} />
                             </div>
                         </div>
-                        {!loginLoading ? <Button text="Sign up" color="var(--lime-green)" width="15rem" height="2.5rem" onClick={(e) => login(e)} />
+                        {!loginLoading ? <Button text="Login" color="var(--lime-green)" width="15rem" height="2.5rem" onClick={(e) => login(e)} />
                         : <p>Loading...</p>}
                     </form>
                     <hr />

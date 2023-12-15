@@ -6,10 +6,11 @@
 
 :root{
     --lime-green: #37C513;
-    --ash-gray: #A3AE9E;
-    --ebony-green: #40493B;
+    --ash-gray: #37C513;
+    --ebony-green: #4C4B16;
     --dim-gray:#626262;
     --platinum-gray: #D9D9D9;
+    --emerald: #4ecb71;
 }
 
 a{
@@ -18,4 +19,5 @@ a{
 
 body{
     background-color: var(--ebony-green);
+    
 }
