@@ -2,13 +2,10 @@ import { useRef, useState } from "react";
 import styles from "./playlistBuilder.module.css";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
-import { Timestamp, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
 import upload_image from '../../../public/image-upload.svg';
 import upload_music from '../../../public/music-upload.svg';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import H5AudioPlayer  from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
@@ -53,13 +50,16 @@ const PlaylistBuilder = () => {
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        setImageFile(file);
+        if (file) {
+            document.querySelector('#uploadIcon').classList.add('iconChanged');
+            setImageFile(file);
+        }
     };
 
     const createPlaylist = async () => {
 
         if(!title || !description || songs.length === 0){
-            toast("Please,fill all feilds and upload at least 1 audio file")
+            alert("Please,fill all feilds and upload at least 1 audio file");
             return;
         }
 
@@ -88,24 +88,17 @@ const PlaylistBuilder = () => {
             groupID: "userCreatedPlaylistGroupTest",
             imageUrl: songs[0].imageUrl,
             public: isPublic,
-            title: title,
-            createdDate: Timestamp.now(),
-            isPopular: false
+            title: title
             // Later we need to add a userId to it
-        }).then((snapshot) => {
-            toast("Created!")
-            console.log("Playlist " + playlistID + " created")
-        }).catch((error) => {
-            toast("Created canceled!")
-            console.log(error)
-        });
+        }).then((snapshot) => console.log("Playlist " + playlistID + " created"))
+            .catch((error) => console.log(error));
     }
 
     const handleSongSubmit = (event) => {
         event.preventDefault();
 
         if (!audioFile || !audioName || !imageFile || !singer) {
-            toast("Fill all fields please")
+            alert("Fill all fields please");
             return;
         }
         console.log(audioFile.name);
@@ -207,6 +200,7 @@ const PlaylistBuilder = () => {
                                 <div className={styles.image}>
                                     <label htmlFor="audioImage">
                                         <img
+                                            id="uploadIcon"
                                             src={upload_image}
                                             alt="Выбрать файл"
                                         />
@@ -230,16 +224,16 @@ const PlaylistBuilder = () => {
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                    <div className={styles.footer}>
-                        <button type="submit">Add a song</button>
-                    </div>
+                        </div>
+                        <div className={styles.footer}>
+                            <button type="submit">Add a song</button>
+                        </div>
                     </div>
                 </form>
                 <div className={`${styles.songs}`}>
                     {isAudioLoading && <p>Uploading...</p>}
                     {songs.length !== 0 && songs.map((song, i) => (
-                        <div key={generateRandomString(16)} className={`${styles.songDisplayed}`}>
+                        <div key={song.songUrl} className={`${styles.songDisplayed}`}>
                             <h3>{i + 1}</h3>
                             <hr />
                             <div className={`${styles.songDisplayed__data}`}>
@@ -253,9 +247,9 @@ const PlaylistBuilder = () => {
                                     <div className={styles.h5Player}>
                                         <H5AudioPlayer
                                             className={styles.audioPlayer}
+                                            autoPlay
                                             src={song.songUrl}
                                             customVolumeControls={[]}
-                                            hasDefaultKeyBindings={false}
                                         />
                                     </div>
                                     {/*<audio preload controls>*/}
@@ -270,18 +264,6 @@ const PlaylistBuilder = () => {
                     {songs.length !== 0 && console.log(songs[0].imageUrl)}
                 </div>
                 <Button text="Create" onClick={createPlaylist} medium />
-                <ToastContainer
-                    position="top-center"
-                    autoClose={5000}
-                    hideProgressBar={true}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="dark"
-                />
             </div>
         </div>
     </>)

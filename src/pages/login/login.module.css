@@ -1,4 +1,4 @@
-.form_container{
+/* .form_container{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,4 +70,84 @@
 
 .socialSignUp{
 
+} */
+.form_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgb(101, 147, 76);
+}
+
+hr {
+    margin: 10px 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.socialSignUp {
+    text-align: center;
+    margin: 15px 0;
+    /* Add styling for social sign-up buttons/icons */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form_block {
+    margin-bottom: 15px;
+}
+
+label {
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.password {
+    position: relative;
+}
+
+.password input[type="button"] {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+Button {
+    width: 100%;
+    margin-left: 10%;
+}
+
+p {
+    text-align: center;
+    margin-top: 10px;
+    color: #555;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
 }

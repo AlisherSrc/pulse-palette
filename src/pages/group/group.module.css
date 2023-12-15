@@ -1,66 +1,61 @@
-.groupPart{
-display: flex;
-margin-left: 5%;
-margin-top: 20px;
-height: 37vh;
+.main{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;  
+    margin: 0 4% 0 4%;
+}
+.groupPart {
+  display: flex;
+  /* justify-content: space-between; */
+  width: 100%;
+  /* margin-left: 5%; */
+  margin-top: 20px;
+  margin-bottom: 50px;
 }
 .groupPart img {
-    width: 20%;
-    height: 100%;
-    border-radius: 10px;
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
 }
-.groupText{
-    padding-left: 4%;
+.groupText {
+  padding-left: 4%;
 }
-.groupText h1{
-    color: #fff;
-    margin-bottom: 10%;
+.groupText a{
+  color: #A3AE9E;
 }
-.groupText h3{
-    color: #fff;
+.groupText h1 {
+  color: #A3AE9E;
+  margin-bottom: 10%;
+  font-size: 2.5rem;
 }
-.playlists{
-    margin-top: 2%;
-    margin-left: 2%;
-    margin-right: 2%;
+.groupText h3 {
+  color: #A3AE9E;
 }
 .playlists {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
-.playlist{ /*25% width for each item to have 4 items in a row */
-    box-sizing: border-box;
-    border: 1px solid #000;
-    text-align: center;
-    border-radius: 10px;
-    height: 37vh;
-    background-color: #a49c9c;
-} 
-.playlist img{
-    width: 100%;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    height: 65%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(20%, 1fr));
+  gap: 40px 20px;
+  width: 100%;
+  margin-top: 50px;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 2%;
 }
-.playlist h4{
-    text-align: left;
-    padding-left: 5%;
-    margin-bottom: 5%;
-    margin-top:3%;
+.card_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5%;
+    height: 18rem;
 }
-.playlist p{
-    font-size: 70%;
-    text-align: left;
-    padding-left: 5%;
-}
+
 /* .playlists{
 display: flex;
 flex-wrap: wrap;
 }
 .playlist{
-    width: 16%; /* 25% width for each item to have 4 items in a row 
+    width: 16%; 
     margin: 10px;
     box-sizing: border-box;
     border: 1px solid #000;
@@ -93,3 +88,10 @@ flex-wrap: wrap;
     text-align: left;
     padding-left: 5%;
 } */
+.horizontalLine {
+  width: 100%;
+  height: 3px; 
+  margin: 0 4% 0 4%;
+
+  background-color: #37C513;
+}

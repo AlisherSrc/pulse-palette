@@ -1,87 +1,120 @@
-body{
-    width: 100%;
+.body {
+  overflow-x: hidden;
+    margin: 0 4% 0 4%;
+
 }
-.profilePart{
-    margin-left: 2%;
-    display: flex;
-    margin-top: 2%;
-    display: 37vh;
-    position: relative;
-    width: 100%;
-}
-.profilePart img{
-    height: 100%;
-}
-.playlists a{
-    text-decoration: none;
-    color: #000;
-}
-.userData{
-    color: #e8dfdf;
-    position: relative;    
-    margin-left: 4%;
-}
-.userData h2{
-    margin-top: 10%;
-}
-.userData h4{
-    position: absolute;
-    bottom: 0;
-    right: 0;
+.profilePart {
+  display: flex;
+  margin-top: 2%;
+  display: 37vh;
+  position: relative;
+  width: 100%;
+  margin-bottom: 5%;
 }
 
-.profilePart button{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    
+.playlists a {
+
 }
-@media (max-width:400px) {
-    .profilePart button{
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: auto;
-    }
+.userData {
+  color: #ffffff;
+  position: relative;
+  margin-left: 4%;
 }
-.list{
-    margin-top: 7%;
-    margin-left: 2%;
-    color: #e8dfdf;
+.userData h3 {
+  margin-bottom: 30%;
 }
-.playlists{
-    margin-top: 2%;
-    margin-left: 2%;
-    margin-right: 2%;
+.userData h2 {
+  font-weight: 500;
 }
+.buttons{
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: auto;
+}
+/* .profilePart button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  margin-left: unset;
+} */
+
+.list {
+  margin-top: 7%;
+  margin-left: 2%;
+  color: #e8dfdf;
+}
+/* .playlists {
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+} */
 .playlists {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+
+.playlist {
   
-.playlist{ /*25% width for each item to have 4 items in a row */
-    box-sizing: border-box;
-    border: 1px solid #000;
-    text-align: center;
-    border-radius: 10px;
-    height: 47vh;
-    background-color: #a49c9c;
-} 
-.playlist img{
-    width: 100%;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    height: 65%;
+  box-sizing: border-box;
+  border: 1px solid #000;
+  text-align: center;
+  border-radius: 10px;
+  height: 47vh;
+  background-color: #a49c9c;
 }
-.playlist h4{
-    text-align: left;
-    padding-left: 5%;
-    margin-bottom: 5%;
-    margin-top:3%;
+.playlist img {
+  width: 100%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  height: 65%;
 }
-.playlist p{
-    font-size: 70%;
-    text-align: left;
-    padding-left: 5%;
+.playlist h4 {
+  text-align: left;
+  padding-left: 5%;
+  margin-bottom: 5%;
+  margin-top: 3%;
+}
+.playlist p {
+  font-size: 70%;
+  text-align: left;
+  padding-left: 5%;
+}
+.avatar {
+  position: absolute;
+  /* aspect-ratio: auto; */
+  /* border-radius: 50%; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Auto scaling */
+  object-fit: cover;
+  transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+  cursor: pointer; 
+}
+
+/* Make a mask */
+.avatar_container{
+  position: relative;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  overflow: hidden;
+}
+.avatar:hover {
+  transform: scale(1.1); /* Slightly scale up the avatar on hover */
+}
+
+@media (max-width: 400px) {
+  .profilePart button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: auto;
+  }
 }
