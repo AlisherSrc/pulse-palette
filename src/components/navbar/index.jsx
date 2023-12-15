@@ -37,7 +37,10 @@ const Navbar = () => {
                 </div>
                     : <div className={`${styles.navbar_buttons}`} >
                         <Link to="/login" ><Button text="Login" medium style={{ border: 'none' }} /></Link>
+                        <div className={styles.signButton}>
                         <Link to="/signup" ><Button  text="Sign Up" medium color="transparent" /></Link>
+
+                        </div>
                     </div>}
             </div>
         </nav>

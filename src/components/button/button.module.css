@@ -10,7 +10,7 @@
   border: none;
   border-radius:10px;
   font-weight:800;
-  background-color: var(--ash-gray);
+  background-color: #A3AE9E
+  ;
   cursor: pointer;
-  border: 1px solid #000000;
 }
