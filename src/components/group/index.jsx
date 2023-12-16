@@ -56,10 +56,10 @@ const Group = (props) => {
         <div className={styles.group}>
             <div className={styles.group_text}>
                 <h3>{title}</h3>
-                {isUsersPlaylists && <Link to={`/group/created`}>show all</Link>}
-                {isUsersFavorites && <Link to={`/group/favorites`}>show all</Link>}
+                {isUsersPlaylists && <Link to={`/group/created`}>Show all</Link>}
+                {isUsersFavorites && <Link to={`/group/favorites`}>Show all</Link>}
                 {!isUsersFavorites && !isUsersPlaylists && (
-                    <Link to={groupID ? `/group/${groupID}` : `/group/${title}`}>show all</Link>
+                    <Link to={groupID ? `/group/${groupID}` : `/group/${title}`} className={styles.showAllLink}>Show all</Link>
                 )}
             </div>
 

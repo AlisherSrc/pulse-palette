@@ -1,8 +1,10 @@
 .group {
   display: flex;
   flex-flow: column;
-  width: 100%;
+  width: 90%;
   gap: 3rem;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .group_text {
@@ -23,7 +25,6 @@
   display: inline-block;
   text-decoration: none;
   color: #F7F1E5 ;
-  opacity:  50%;
 }
 .group_text p {
   display: inline-block;
@@ -41,4 +42,22 @@
 .card_container {
   width: 20%;
   height: 18rem;
+}
+
+.showAllLink {
+  display: inline-block;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+  color: #fff;
+  background-color: rgba(169, 166, 166, 0.42);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.showAllLink:hover, .show-all-link:focus {
+  opacity:  100%;
+  background-color: rgba(4, 191, 35, 0.78);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

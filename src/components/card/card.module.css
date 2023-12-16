@@ -30,17 +30,18 @@
     width: 80%;
     align-items: start;
     margin-bottom: 5%;
-    color: #B3B3B3;
+    margin-top: 5%;
+    color: #ffffff;
 }
 
 .card_text h3 {
     font-size: 1rem;
-    color: #B3B3B3; /*rgba(0, 0, 0, 0.5);*/
+    color: #fffcfc; /*rgba(0, 0, 0, 0.5);*/
 }
 
 .card_text h2 {
     font-size: 1.7rem;
-    color: #B3B3B3; /*rgba(0, 0, 0, 0.8);*/
+    color: #ffffff; /*rgba(0, 0, 0, 0.8);*/
 }
 
 .card_image {
@@ -78,7 +79,7 @@
     height: 100%;
 }
 .card_text p{
-    color: #B3B3B3;
+    color: #ffffff;
 }
 .card_title{
     font-size: large;
