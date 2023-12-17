@@ -11,6 +11,7 @@ import { Context } from "../../App";
 import useGetUserPlaylists from "../../hooks/useGetUserPlaylists";
 import useTurnDocIdsIntoDocs from "../../hooks/useTurnDocIdsToDocs";
 import { Link } from "react-router-dom";
+import LoadingIcon from "../../components/loading_icon";
 
 const Profile = () => {
     const [isAuth, setisAuth] = useState(false);
@@ -79,7 +80,7 @@ const Profile = () => {
                 </div>
                 <div className={`${styles.playlists}`}>
                     {/* Still undefined when click*, address this issue by providing query or something to do with it */}
-                    {!loading ? <Group title="All Playlists" isUsersPlaylists inputPlaylists={[likedPlaylists, ...userPlaylists]} /> : "Loading"}
+                    {!loading ? <Group title="All Playlists" isUsersPlaylists inputPlaylists={[likedPlaylists, ...userPlaylists]} /> : <LoadingIcon />}
                     {/* {<Group title="Favorites" isUsersFavorites />} */}
                 </div>
             </div>

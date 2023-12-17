@@ -12,6 +12,7 @@ import heart from '../../images/heart.svg';
 import Song from '../../components/song';
 import useGetUserLikedDocs from '../../hooks/useGetUserLikedSongs';
 import ShareButton from '../../components/share_button';
+import LoadingIcon from '../../components/loading_icon';
 
 
 const Playlist = () => {
@@ -75,7 +76,7 @@ const Playlist = () => {
     return (
         <>
             {loading ? (
-                <p>Loading...</p>
+                <LoadingIcon />
             ) : (
                 <div className={styles.main}>
                     <div className={styles.playlistPart}>

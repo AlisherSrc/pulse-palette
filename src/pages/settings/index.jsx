@@ -15,6 +15,7 @@ const Settings = () => {
     const [image, setImage] = useState(null);
     const { customUser, setCustomUser } = useContext(Context);
     const [profile, setProfile] = useState({});
+    const [loading,setLoading] = useState(false);
 
     const auth = getAuth();
 
@@ -47,6 +48,7 @@ const Settings = () => {
             resizeImage(image, 1920, 1080, 1, async (imageOut) => {
                 console.log(imageOut)
                 try {
+                    setLoading(true);
                     const snapshot = await uploadBytes(avatarRef, imageOut);
                     console.log("Avatar has been uploaded!");
                     const url = await getDownloadURL(snapshot.ref);
@@ -63,22 +65,26 @@ const Settings = () => {
                         ...profile,
                         avatarUrl: url,
                     }));
-
+                    setLoading(false);
                     console.log("Profile updated with new avatar URL");
                 } catch (err) {
                     console.error("Failed to upload avatar and update profile:", err);
+                    setLoading(false);
                 }
             });
         } else if (!image && Object.keys(profile).length !== 0) {
             try {
+                setLoading(true);
                 await updateDoc(userRef, profile);
                 console.log("Success!");
                 setCustomUser((currUser) => ({
                     ...currUser,
                     ...profile,
                 }));
+                setLoading(false);
             } catch (e) {
                 console.error("Failed to update profile:", e);
+                setLoading(false);
             }
         }
     };
@@ -114,6 +120,7 @@ const Settings = () => {
                         <input onChange={(e) => handleFieldsChange(e)} type='text' name='username' placeholder={customUser?.username ?? "username"} />
                     </label>
                     <Button onClick={() => handleSubmit()} text="Submit" />
+                    {loading && <p style={{color:"white"}}>Loading...</p>}
                 </div>
             </div>
         </div>

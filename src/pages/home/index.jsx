@@ -9,6 +9,8 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Context } from '../../App';
 import { db } from '../../config/firebase';
+import LoadingIcon from '../../components/loading_icon';
+
 
 const Home = () => {
     const auth = getAuth();
@@ -39,7 +41,10 @@ const Home = () => {
             <Group title="Popular" groupID="lci3fBjppIELL2Ttlnb2" numShowed={4} />
         </>
     ) : (
-        <p>Loading...</p>
+        <div className={`${styles.loading_icon}`}>
+            {/* <p style={{color: "white"}}>Loading...</p> */}
+            <LoadingIcon />
+        </div>
     )}
 </div>
         </>

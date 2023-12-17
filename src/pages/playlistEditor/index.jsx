@@ -17,6 +17,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import Button from "../../components/button";
 import { getAuth } from "firebase/auth";
 import { useParams, useNavigate } from "react-router-dom";
+import LoadingIcon from "../../components/loading_icon";
 
 const PlaylistEditor = () => {
 
@@ -330,7 +331,7 @@ const PlaylistEditor = () => {
     }
 
     return (<>
-        {loading ? <p>Loading...</p> : <div className={`${styles.builder}`}>
+        {loading ? <LoadingIcon /> : <div className={`${styles.builder}`}>
             <div className={`${styles.builder_inner}`}>
                 <h2>Edit playlist</h2>
                 <form className={`${styles.playlistForm}`}>
