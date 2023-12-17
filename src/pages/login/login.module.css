@@ -158,8 +158,9 @@
 
 .password input[type="button"] {
     position: absolute;
-    top: 50%;
-    right: 10px;
+    width: 20%;
+    top: 35%;
+    left: 110%;
     transform: translateY(-50%);
     cursor: pointer;
 }
