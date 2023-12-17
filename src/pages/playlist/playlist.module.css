@@ -18,11 +18,26 @@
   height: 37vh;
   margin-bottom: 5%; */
 }
-.playlistPart img {
+
+.image_container{
+  position: relative;
   width: 250px;
   height: 250px;
+  overflow: hidden;
+}
+
+.image_container img {
+  position: absolute;
+  width: auto;
+  /* Center it */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+
+  height: 100%;
   border-radius: 10px;
 }
+
 .playlistText {
   display: flex;
   flex-flow: column;

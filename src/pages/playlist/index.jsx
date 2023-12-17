@@ -11,6 +11,7 @@ import { getAuth } from 'firebase/auth';
 import heart from '../../images/heart.svg';
 import Song from '../../components/song';
 import useGetUserLikedDocs from '../../hooks/useGetUserLikedSongs';
+import ShareButton from '../../components/share_button';
 
 
 const Playlist = () => {
@@ -78,7 +79,9 @@ const Playlist = () => {
             ) : (
                 <div className={styles.main}>
                     <div className={styles.playlistPart}>
-                        <img src={songs[0]?.image ?? "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt="" className={styles.playlistImage} />
+                        <div className={`${styles.image_container}`}>
+                            <img src={songs[0]?.image ?? "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt="" className={styles.playlistImage} />
+                        </div>
                         <div className={styles.playlistText}>
                             <h1>{playlist.title}</h1>
                             <h3>{playlist.description}</h3>
@@ -87,6 +90,7 @@ const Playlist = () => {
                                     <button className={`${styles.button_68}`} role="button">Edit</button>
                                 </Link>
                             )}
+                            <ShareButton msgtitle={`${playlist.title}`} msgdescription={`${playlist.description}`} />
                         </div>
                     </div>
                     <hr className={styles.horizontalLine} />
