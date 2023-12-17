@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./playlistEditor.module.css";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
 import { Timestamp, collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
@@ -53,6 +53,11 @@ const PlaylistEditor = () => {
 
     const [audioEditLoading, setAudioEditLoading] = useState(false);
 
+    const [isAudioLoading, setAudioLoading] = useState(false);
+
+    const [audioUploadProgress, setAudioUploadProgress] = useState(0);
+    const [imageUploadProgress, setImageUploadProgress] = useState(0);
+
     useEffect(() => {
 
 
@@ -65,7 +70,7 @@ const PlaylistEditor = () => {
 
 
                 const playlistDoc = await getDoc(doc(db, "playlist", id));
-                
+
                 if (!playlistDoc.exists || auth.currentUser?.email !== playlistDoc.data().userEmail) {
                     alert("You have no access to edit this playlist");
                     navigate('/'); // Redirect them to a safe location
@@ -98,6 +103,83 @@ const PlaylistEditor = () => {
         getDocument();
 
     }, []);
+
+    const handleSongSubmit2 = (event) => {
+        try {
+            event.preventDefault();
+
+            if (!audioFile || !audioName || !imageFile || !singer) {
+                alert("Fill all fields please");
+                return;
+            }
+            console.log(audioFile.name);
+            console.log(imageFile.name);
+
+            // Making references to the path where they will be uploaded
+            const audioStorageRef = ref(storage, `audio/${audioFile.name}${generateRandomString(5)}`);
+            const imageStorageRef = ref(storage, `songImages/${imageFile.name}${generateRandomString(5)}`);
+
+            setAudioLoading(true);
+
+            // Start the audio file upload
+            const audioUploadTask = uploadBytesResumable(audioStorageRef, audioFile);
+            const imageUploadTask = uploadBytesResumable(imageStorageRef, imageFile);
+
+
+            // Listen for state changes, errors, and completion of the audio upload.
+            audioUploadTask.on('state_changed', (snapshot) => {
+                // Get upload progress
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setAudioUploadProgress(progress);
+            });
+
+            // Listen for state changes, errors, and completion of the image upload.
+            imageUploadTask.on('state_changed', (snapshot) => {
+                // Get upload progress
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setImageUploadProgress(progress);
+            });
+            Promise.all([
+                audioUploadTask,
+                imageUploadTask
+            ]).then((snapshot) => {
+                console.log("Image and Audio has been uploaded!");
+                // get uploaded audio and image url
+                return Promise.all([
+                    getDownloadURL(audioStorageRef),
+                    getDownloadURL(imageStorageRef)
+                ])
+            }).then((urls) => {
+                // url[0] - audioUrl
+                // url[1] - imageUrl
+    
+                const songID = `${audioName}${generateRandomString(16)}`;
+    
+                return setDoc(doc(db, "song", songID), {
+                    image: urls[1],
+                    name: audioName,
+                    playlistID: id,
+                    singer: singer,
+                    songFile: urls[0],
+                    userEmail: auth.currentUser.email
+                }).then((snapshot) => {
+                    console.log("Song created");
+    
+                    setSongs([{
+                        id: songID,
+                        name: audioName,
+                        image: urls[1],
+                        songFile: urls[0],
+                        singer: singer
+                    }, ...songs]);
+                    setAudioLoading(false);
+                })
+            })
+        } catch (e) {
+            console.log(e);
+            setAudioLoading(false);
+        }
+    }
 
     const handleSongSubmit = (event) => {
         event.preventDefault();
@@ -158,6 +240,8 @@ const PlaylistEditor = () => {
         setAudioFile(null);
     }
 
+    const combinedUploadProgress = (audioUploadProgress + imageUploadProgress) / 2;
+
     const handleAudioUpload = async (event) => {
         const file = event.target.files[0];
         setAudioFile(file);
@@ -193,7 +277,7 @@ const PlaylistEditor = () => {
             public: isPublic
         });
         setPlaylistLoading(false);
-
+        toast("Saved!");
     }
 
     // User can edit
@@ -343,7 +427,7 @@ const PlaylistEditor = () => {
                     </div>
                 </form>
 
-                <form className={`${styles.songForm}`} ref={songFormRef} onSubmit={handleSongSubmit}>
+                <form className={`${styles.songForm}`} ref={songFormRef} onSubmit={handleSongSubmit2}>
                     <div className={styles.audioMain}>
                         <div className={`${styles.audioDescription}`}>
                             <div className={styles.audioInfo}>
@@ -357,7 +441,7 @@ const PlaylistEditor = () => {
                                             src={upload_image}
                                             alt="Выбрать файл"
                                         />
-                                        <span className="input__file-button-text">Upload Audio image</span>
+                                        <span className="input__file-button-text">{imageFile ? "Image uploaded!" : "Upload Audio image"}</span>
                                     </label>
                                     <div className={styles.customButton}>
                                         <input id="audioImage" type="file" accept="image/*" onChange={handleImageUpload} />
@@ -370,7 +454,7 @@ const PlaylistEditor = () => {
                                             src={upload_music}
                                             alt="Выбрать файл"
                                         />
-                                        <span>Upload Audio file</span>
+                                        <span>{audioFile ? "Audio Uploaded" : "Upload Audio file"}</span>
                                     </label>
                                     <div className={`${styles.customButton}`}>
                                         <input id="audioFile" type="file" accept="audio/*" onChange={handleAudioUpload} />
@@ -385,6 +469,10 @@ const PlaylistEditor = () => {
                 </form>
                 {/* Here are songs */}
                 <div className={`${styles.songs}`}>
+                    {isAudioLoading && <div className={`${styles.progress_bar}`}>
+                        <progress value={combinedUploadProgress} max="100"></progress>
+                        <span>{combinedUploadProgress.toFixed(0)}%</span>
+                    </div>}
                     {songs.length !== 0 && songs.map((song, i) => (
                         <div key={song.id} className={`${styles.songDisplayed}`}>
                             {audioEditLoading && <p>Loading...</p>}
