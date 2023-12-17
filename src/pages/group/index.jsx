@@ -8,6 +8,7 @@ import useGetLatestPlaylists from '../../hooks/useGetLatestPlaylists';
 import Card from '../../components/card';
 import useGetUserPlaylists from '../../hooks/useGetUserPlaylists';
 import { Context } from '../../App';
+import LoadingIcon from '../../components/loading_icon';
 
 
 const Group = () => {
@@ -73,10 +74,10 @@ const Group = () => {
 
     return (
         <>
-            {loading ? <p>Loading...</p> :
+            {loading ? <LoadingIcon /> :
 
                 <div className={`${styles.main}`}>
-                    {playlists.length === 0 ? <p>This group is empty!</p> : 
+                    {playlists.length === 0 ? <p style={{color:"white"}}>This group is empty!</p> : 
                     <div className={`${styles.groupPart}`}>
                         <img src={playlists[0]?.imageUrl} alt="playlist image" />
                         <div className={`${styles.groupText}`}>
