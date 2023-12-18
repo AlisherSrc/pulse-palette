@@ -36,7 +36,6 @@ const Settings = () => {
     };
 
     const handleSubmit = async () => {
-        console.log(customUser);
         const userRef = doc(db, "user", customUser.id);
 
         if (image) {
@@ -46,27 +45,22 @@ const Settings = () => {
 
             // Convert the image to WebP and then upload
             resizeImage(image, 1920, 1080, 1, async (imageOut) => {
-                console.log(imageOut)
                 try {
                     setLoading(true);
                     const snapshot = await uploadBytes(avatarRef, imageOut);
-                    console.log("Avatar has been uploaded!");
                     const url = await getDownloadURL(snapshot.ref);
-                    console.log("url: ", url);
-                    console.log("profile: ", profile);
+
                     await updateDoc(userRef, {
                         ...profile,
                         avatarUrl: url, // Update the profile with the new avatar URL
                         avatarPreview: ""
                     });
-                    console.log("Sdsadasd")
                     setCustomUser((currUser) => ({
                         ...currUser,
                         ...profile,
                         avatarUrl: url,
                     }));
                     setLoading(false);
-                    console.log("Profile updated with new avatar URL");
                 } catch (err) {
                     console.error("Failed to upload avatar and update profile:", err);
                     setLoading(false);
@@ -76,7 +70,6 @@ const Settings = () => {
             try {
                 setLoading(true);
                 await updateDoc(userRef, profile);
-                console.log("Success!");
                 setCustomUser((currUser) => ({
                     ...currUser,
                     ...profile,

@@ -32,7 +32,6 @@ const Checkout = ({ setShowPopup }) => {
                 changeToPremium();
                 setCustomUser((prev) => ({...prev,subscription: true}))
                 const order = await actions.order.capture();
-                console.log("Order success:", order);
                 setShowPopup(false);
             },
             onError: (err) => {

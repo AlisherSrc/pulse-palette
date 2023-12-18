@@ -30,7 +30,7 @@ const Home = () => {
         return () => unsubscribe();
     }, [auth]);
 
-   const {playlists,loading} = useGetLatestPlaylists();
+   const {playlists} = useGetLatestPlaylists();
 
     return (
         <>

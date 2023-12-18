@@ -3,7 +3,7 @@ import styles from "./profile.module.css";
 import Register from "../register";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import Group from "../../components/group";
 import { Button } from 'antd';
@@ -19,7 +19,7 @@ const Profile = () => {
 
     const [userPlaylists, loading, error] = useGetUserPlaylists();
 
-    const { customUser,setCustomUser,userCreatedPlaylists } = useContext(Context);
+    const { customUser,setCustomUser } = useContext(Context);
 
     const nav = useNavigate();
 
@@ -33,7 +33,6 @@ const Profile = () => {
     }
 
     const [docs] = useTurnDocIdsIntoDocs([["My first auth playlist oM1Q3Chvp0Y9JXKV"], "playlist"]);
-    console.log("Usercreated playlists",userCreatedPlaylists);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {

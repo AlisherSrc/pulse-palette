@@ -24,9 +24,6 @@ const Group = () => {
 
     useEffect(() => {
         const docs = [];
-
-        console.log(JSON.stringify(id));
-
         try {
 
             const getDocuments = async () => {
@@ -53,7 +50,6 @@ const Group = () => {
                 setPlaylists(latestPlaylists);
                 setGroup({ title: id });
                 !loadingPlaylists && setLoading(false);
-                console.log(latestPlaylists, loadingPlaylists);
             } else if (id === "created") {
                 setPlaylists(userPlaylists);
                 setGroup({title: "All playlists"});

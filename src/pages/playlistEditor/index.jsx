@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./playlistEditor.module.css";
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
-import { Timestamp, collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
 import upload_image from '../../../public/image-upload.svg';
 import upload_music from '../../../public/music-upload.svg';
@@ -113,8 +113,6 @@ const PlaylistEditor = () => {
                 alert("Fill all fields please");
                 return;
             }
-            console.log(audioFile.name);
-            console.log(imageFile.name);
 
             // Making references to the path where they will be uploaded
             const audioStorageRef = ref(storage, `audio/${audioFile.name}${generateRandomString(5)}`);
@@ -143,8 +141,7 @@ const PlaylistEditor = () => {
             Promise.all([
                 audioUploadTask,
                 imageUploadTask
-            ]).then((snapshot) => {
-                console.log("Image and Audio has been uploaded!");
+            ]).then(() => {
                 // get uploaded audio and image url
                 return Promise.all([
                     getDownloadURL(audioStorageRef),
@@ -163,9 +160,7 @@ const PlaylistEditor = () => {
                     singer: singer,
                     songFile: urls[0],
                     userEmail: auth.currentUser.email
-                }).then((snapshot) => {
-                    console.log("Song created");
-    
+                }).then(() => {    
                     setSongs([{
                         id: songID,
                         name: audioName,
@@ -182,71 +177,13 @@ const PlaylistEditor = () => {
         }
     }
 
-    const handleSongSubmit = (event) => {
-        event.preventDefault();
-
-        if (!audioFile || !audioName || !imageFile || !singer) {
-            toast("Fill all fields please")
-            return;
-        }
-        console.log(audioFile.name);
-        console.log(imageFile.name);
-
-        // Making references to the path where they will be uploaded
-        const audioStorageRef = ref(storage, `audio/${audioFile.name}${generateRandomString(5)}`);
-        const imageStorageRef = ref(storage, `songImages/${imageFile.name}${generateRandomString(5)}`);
-
-        // Upload audio and image
-        Promise.all([
-            uploadBytes(audioStorageRef, audioFile),
-            uploadBytes(imageStorageRef, imageFile)
-        ]).then((snapshot) => {
-            console.log("Image and Audio has been uploaded!");
-            // get uploaded audio and image url
-            return Promise.all([
-                getDownloadURL(audioStorageRef),
-                getDownloadURL(imageStorageRef)
-            ])
-        }).then((urls) => {
-            // url[0] - audioUrl
-            // url[1] - imageUrl
-
-            const songID = `${audioName}${generateRandomString(16)}`;
-
-            return setDoc(doc(db, "song", songID), {
-                image: urls[1],
-                name: audioName,
-                playlistID: id,
-                singer: singer,
-                songFile: urls[0],
-                userEmail: auth.currentUser.email
-            }).then((snapshot) => {
-                console.log("Song created");
-
-                setSongs([{
-                    id: songID,
-                    name: audioName,
-                    image: urls[1],
-                    songFile: urls[0],
-                    singer: singer
-                }, ...songs]);
-            })
-        }).catch((error) => console.log(error));
-
-        songFormRef.current.reset();
-
-        setAudioName('');
-        setSinger('');
-        setImageFile(null);
-        setAudioFile(null);
-    }
+    
 
     const combinedUploadProgress = (audioUploadProgress + imageUploadProgress) / 2;
 
     const handleAudioUpload = async (event) => {
         const file = event.target.files[0];
         setAudioFile(file);
-        const fileDuration = await getAudioDuration(file);
     }
 
     const handleImageUpload = (event) => {

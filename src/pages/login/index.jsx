@@ -11,7 +11,7 @@ import { db } from '../../config/firebase';
 
 const Login = () => {
 
-    const [loading,setLoading] = useState(false);
+    const [loading] = useState(false);
     const [loginLoading,setLoginLoading] = useState(false);
 
     const [email, setEmail] = useState('');
@@ -26,9 +26,7 @@ const Login = () => {
     const login = (event) => {
         event.preventDefault();
         setLoginLoading(true);
-        
-        console.log(email,password);
-        if(!email || !password){
+                if(!email || !password){
             setTimeout(() => setLoginLoading(false),50);
             alert("Please, fill all fields");
             return;

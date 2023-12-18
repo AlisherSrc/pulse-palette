@@ -1,14 +1,11 @@
 import styles from './playlist.module.css';
-import { useParams, useNavigate } from 'react-router-dom';
-import { db, storage } from '../../config/firebase';
-import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { db } from '../../config/firebase';
+import { useEffect, useState } from 'react';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-
-import H5AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { getAuth } from 'firebase/auth';
-import heart from '../../images/heart.svg';
 import Song from '../../components/song';
 import useGetUserLikedDocs from '../../hooks/useGetUserLikedSongs';
 import ShareButton from '../../components/share_button';
@@ -16,11 +13,8 @@ import LoadingIcon from '../../components/loading_icon';
 
 
 const Playlist = () => {
-    const navigate = useNavigate();
-
     const { id } = useParams();
     const [songs, setSongs] = useState([]);
-    const refAudio = useRef(null);
     const [playlist, setPlaylist] = useState(null);
     const [loading, setLoading] = useState(true);
     const [currUser, setCurrUser] = useState(null);
@@ -34,7 +28,6 @@ const Playlist = () => {
             setCurrUser(auth.currentUser);
         } else {
             // navigate("/login");
-            console.log("Not reg")
         }
     }, [auth])
 
@@ -61,10 +54,8 @@ const Playlist = () => {
             setPlaylist({ title: "Your liked songs!", description: "There are songs that you like", email: auth.currentUser.email })
             if (!likedSongsLoading) {
                 setSongs(likedSongs);
-                console.log("Liked:", likedSongs);
                 setLoading(false);
             }
-            console.log(likedSongsLoading)
         }
         else getSongs();
 
@@ -98,7 +89,7 @@ const Playlist = () => {
 
                     <div className={styles.audioList}>
                         {songs.length === 0 && <p>Your playlist is empty!</p>}
-                        {songs.map((song, index) => (
+                        {songs.map((song) => (
                             <div key={song.id}>
                                 <Song song={song} />
                             </div>

@@ -7,7 +7,7 @@ import heart from './../../images/heart.svg';
 import filledHeart from './../../images/filled_heart.svg'
 
 import { useContext, useEffect, useState } from 'react';
-import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { Context } from '../../App';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +27,6 @@ const Song = (props) => {
     }, [customUser.likedSongs, song.id])
 
     const handleLike = async (songId) => {
-        console.log(!customUser, customUser?.likedSongs);
 
         if (!customUser || !Array.isArray(customUser?.likedSongs)){
             navigate('/login');
@@ -51,7 +50,6 @@ const Song = (props) => {
 
             await updateDoc(userRef, { likedSongs: updatedLikedSongs });
 
-            console.log(liked ? "Unliked!" : "Liked!");
         } catch (error) {
             console.error("Error updating liked songs:", error);
             // Optionally revert the optimistic UI update in case of error

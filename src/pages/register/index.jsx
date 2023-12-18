@@ -63,7 +63,6 @@ const Register = () => {
 
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(userCredential);
 
                 // Set custom user to use it throughout the app
                 setCustomUser({
@@ -86,7 +85,6 @@ const Register = () => {
                 });
                 // send user to the home page
             }).then((snapshot) => {
-                console.log("User created!");
                 navigate("/");
                 setLoading(false)
             })

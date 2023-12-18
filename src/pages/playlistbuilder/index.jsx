@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import styles from "./playlistBuilder.module.css";
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
@@ -50,22 +50,9 @@ const PlaylistBuilder = () => {
         }
     }, []);
 
-
-    const getAudioDuration = (file) => {
-        const audio = new Audio();
-        audio.src = URL.createObjectURL(file);
-
-        return new Promise((resolve) => {
-            audio.addEventListener('loadedmetadata', () => {
-                resolve(audio.duration);
-            });
-        });
-    };
-
     const handleAudioUpload = async (event) => {
         const file = event.target.files[0];
         setAudioFile(file);
-        const fileDuration = await getAudioDuration(file);
     }
 
     const handleImageUpload = (event) => {
@@ -99,8 +86,6 @@ const PlaylistBuilder = () => {
                     singer: song.singer,
                     songFile: song.songUrl
                 });
-
-                console.log("Song created:", song.name);
             } catch (error) {
                 console.error("Error creating song:", error);
             }
@@ -113,12 +98,10 @@ const PlaylistBuilder = () => {
             public: isPublic,
             title: title,
             userEmail: customUser.email
-        }).then((snapshot) => {
+        }).then(() => {
             toast("Created!");
         }).then(() => {
             setPlaylistLoading(false);
-            console.log("Playlist " + playlistID + " created")
-
             nav("/");
         })
             .catch((error) => {
@@ -134,8 +117,6 @@ const PlaylistBuilder = () => {
             alert("Fill all fields please");
             return;
         }
-        console.log(audioFile.name);
-        console.log(imageFile.name);
 
         // Making references to the path where they will be uploaded
         const audioStorageRef = ref(storage, `audio/${audioFile.name}${generateRandomString(5)}`);
@@ -189,53 +170,6 @@ const PlaylistBuilder = () => {
         });
     }
 
-    const handleSongSubmit = (event) => {
-        event.preventDefault();
-
-        if (!audioFile || !audioName || !imageFile || !singer) {
-            alert("Fill all fields please");
-            return;
-        }
-        console.log(audioFile.name);
-        console.log(imageFile.name);
-
-        // Making references to the path where they will be uploaded
-        const audioStorageRef = ref(storage, `audio/${audioFile.name}${generateRandomString(5)}`);
-        const imageStorageRef = ref(storage, `songImages/${imageFile.name}${generateRandomString(5)}`);
-
-        setAudioLoading(true);
-        // Upload audio and image
-        Promise.all([
-            uploadBytes(audioStorageRef, audioFile),
-            uploadBytes(imageStorageRef, imageFile)
-        ]).then((snapshot) => {
-            console.log("Image and Audio has been uploaded!");
-            // get uploaded audio and image url
-            return Promise.all([
-                getDownloadURL(audioStorageRef),
-                getDownloadURL(imageStorageRef)
-            ])
-        }).then((urls) => {
-            // url[0] - audioUrl
-            // url[1] - imageUrl
-
-            setSongs([{
-                name: audioName,
-                imageUrl: urls[1],
-                songUrl: urls[0],
-                singer: singer
-            }, ...songs]);
-
-            setAudioLoading(false);
-        }).catch((error) => console.log(error));
-
-        songFormRef.current.reset();
-
-        setAudioName('');
-        setSinger('');
-        setImageFile(null);
-        setAudioFile(null);
-    }
     const combinedUploadProgress = (audioUploadProgress + imageUploadProgress) / 2;
 
     // Song:
@@ -251,7 +185,7 @@ const PlaylistBuilder = () => {
     // imageUrl(string)
     // public(boolean)
     // title(string)
-    // userID
+    // userEmail
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
