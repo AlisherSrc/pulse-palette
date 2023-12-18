@@ -17,3 +17,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PULSE_PALETTE_F1982 }}'
           channelId: live
           projectId: pulse-palette-f1982
+        env:
+           FIREBASE_CLI_EXPERIMENTS: webframeworks
