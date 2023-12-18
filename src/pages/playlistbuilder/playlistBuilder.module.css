@@ -326,3 +326,11 @@ input:hover {
 .file-input {
   display: none;
 }
+
+.submit_button{
+  display: flex;
+  align-items: center;
+}
+.submit_button img{
+  width: 45px;
+}

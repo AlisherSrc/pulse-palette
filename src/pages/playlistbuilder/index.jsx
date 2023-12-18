@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import styles from "./playlistBuilder.module.css";
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "../../config/firebase";
@@ -6,14 +7,19 @@ import { doc, setDoc } from "firebase/firestore";
 import { generateRandomString } from "../../tools/generateRandomStr";
 import upload_image from '../../../public/image-upload.svg';
 import upload_music from '../../../public/music-upload.svg';
+import dual_ring from './../../images/dual_ring-1s-200px.svg';
 
 import H5AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 
 import Button from "../../components/button";
+import { ToastContainer, toast } from 'react-toastify';
+import { Context } from "../../App";
+import useGetUserPlaylists from "../../hooks/useGetUserPlaylists";
 
 // It should display user's not uploaded songs, we can do so by the userID field of songs
 const PlaylistBuilder = () => {
+    const [userPlaylists, loading, error] = useGetUserPlaylists();
     // Song fields
     const [audioName, setAudioName] = useState('');
     const [imageFile, setImageFile] = useState(null);
@@ -27,12 +33,22 @@ const PlaylistBuilder = () => {
     const [songs, setSongs] = useState([]); //list of files
 
     const [isAudioLoading, setAudioLoading] = useState(false);
+    const [playlistLoading, setPlaylistLoading] = useState(false);
 
     const [audioUploadProgress, setAudioUploadProgress] = useState(0);
     const [imageUploadProgress, setImageUploadProgress] = useState(0);
 
+    const { customUser } = useContext(Context);
 
     const songFormRef = useRef();
+    const nav = useNavigate();
+
+    useEffect(() => {
+        if (!customUser.subscription && userPlaylists.length >= 5) {
+            alert("You can have max 5 playlists. Please, upgrade to the Premium plan");
+            nav('/');
+        }
+    }, []);
 
 
     const getAudioDuration = (file) => {
@@ -61,15 +77,18 @@ const PlaylistBuilder = () => {
     };
 
     const createPlaylist = async () => {
-
         if (!title || !description || songs.length === 0) {
             alert("Please,fill all feilds and upload at least 1 audio file");
             return;
         }
+        if (!customUser.subscription && userPlaylists.length >= 5) {
+            alert("You can have max 5 playlists. Please, upgrade to the Premium plan");
+            nav('/');
+        }
 
         // For each song we have playlistID field which refers to the playlist they are in
         const playlistID = `${title}${generateRandomString(16)}`;
-
+        setPlaylistLoading(true);
         for (const song of songs) {
             const songID = generateRandomString(16);
             try {
@@ -92,10 +111,20 @@ const PlaylistBuilder = () => {
             groupID: "userCreatedPlaylistGroupTest",
             imageUrl: songs[0].imageUrl,
             public: isPublic,
-            title: title
-            // Later we need to add a userId to it
-        }).then((snapshot) => console.log("Playlist " + playlistID + " created"))
-            .catch((error) => console.log(error));
+            title: title,
+            userEmail: customUser.email
+        }).then((snapshot) => {
+            toast("Created!");
+        }).then(() => {
+            setPlaylistLoading(false);
+            console.log("Playlist " + playlistID + " created")
+
+            nav("/");
+        })
+            .catch((error) => {
+                console.log(error)
+                setPlaylistLoading(false);
+            });
     }
 
     const handleSongSubmit2 = (event) => {
@@ -333,9 +362,26 @@ const PlaylistBuilder = () => {
 
                     {songs.length !== 0 && console.log(songs[0].imageUrl)}
                 </div>
-                <Button text="Create" onClick={createPlaylist} medium />
+                <div className={styles.submit_button}>
+                    <Button text="Create" onClick={createPlaylist} medium />
+                    {playlistLoading && <img src={dual_ring} />}
+                </div>
+
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
             </div>
         </div>
+
     </>)
 }
 

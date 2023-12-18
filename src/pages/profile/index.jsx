@@ -19,7 +19,7 @@ const Profile = () => {
 
     const [userPlaylists, loading, error] = useGetUserPlaylists();
 
-    const { customUser,setCustomUser } = useContext(Context);
+    const { customUser,setCustomUser,userCreatedPlaylists } = useContext(Context);
 
     const nav = useNavigate();
 
@@ -33,7 +33,7 @@ const Profile = () => {
     }
 
     const [docs] = useTurnDocIdsIntoDocs([["My first auth playlist oM1Q3Chvp0Y9JXKV"], "playlist"]);
-    console.log(docs);
+    console.log("Usercreated playlists",userCreatedPlaylists);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -71,6 +71,7 @@ const Profile = () => {
                     <div className={`${styles.userData}`}>
                         <h3>Profile</h3>
                         <h2>{customUser.username}</h2>
+                        <p>{`Created playlists: ${userPlaylists.length}`}</p>
                         <div className={`${styles.buttons}`}>
                         <Button danger ghost onClick={signOut}>Sign Out</Button>
                         <Link to="/settings"><Button edit ghost >Edit</Button></Link>

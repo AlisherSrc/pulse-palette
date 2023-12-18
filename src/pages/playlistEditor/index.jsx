@@ -18,6 +18,7 @@ import Button from "../../components/button";
 import { getAuth } from "firebase/auth";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingIcon from "../../components/loading_icon";
+import dual_ring from './../../images/dual_ring-1s-200px.svg';
 
 const PlaylistEditor = () => {
 
@@ -521,7 +522,7 @@ const PlaylistEditor = () => {
 
                     {songs.length !== 0 && console.log(songs[0].imageUrl)}
                 </div>
-                {playlistLoading && <p>Updating...</p>}
+                {playlistLoading && <img src={dual_ring} style={{width: "30px"}}/>}
                 <div className={`${styles.main_buttons}`}>
                     <Button text="Save" onClick={editPlaylist} medium />
                     <Button text="Delete" medium danger onClick={playlistDelete} />

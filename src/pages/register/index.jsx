@@ -81,7 +81,8 @@ const Register = () => {
                     followers: [],
                     likedSongs: [],
                     favoritePlaylists: [],
-                    avatarUrl: ''
+                    avatarUrl: '',
+                    subscription: false
                 });
                 // send user to the home page
             }).then((snapshot) => {

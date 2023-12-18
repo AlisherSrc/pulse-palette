@@ -1,0 +1,42 @@
+.checkout{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    z-index: 99;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+
+    gap: 20px;
+
+    width: 50%;
+    height: 50%;
+    background-color: aliceblue;
+    z-index: 100;
+}
+
+.content__text{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.notnow{
+    cursor: pointer;
+}

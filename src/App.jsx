@@ -1,6 +1,6 @@
 import './App.css'
 
-import { React, useState, createContext, useEffect } from 'react';
+import { React, useState, createContext, useEffect, useContext } from 'react';
 import Navbar from './components/navbar';
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider } from 'react-router-dom';
 import Home from './pages/home';
@@ -14,6 +14,7 @@ import Register from './pages/register';
 import Login from './pages/login';
 import PlaylistEditor from './pages/playlistEditor';
 import Settings from './pages/settings';
+import useGetUserPlaylists from './hooks/useGetUserPlaylists';
 
 
 export const Context = createContext();
@@ -24,6 +25,7 @@ const ContextdbProvider = ({ children }) => {
   const [userCreatedPlaylists, setUserCreatedPlaylists] = useState([]);
   const [customUser, setCustomUser] = useState({});
 
+
   return (
     <Context.Provider value={{ userCreatedPlaylists, setUserCreatedPlaylists, customUser, setCustomUser }}>
       {children}
@@ -32,7 +34,6 @@ const ContextdbProvider = ({ children }) => {
 }
 
 function App() {
-
   useEffect(() => {
     const updateOnlineStatus = async () => {
       if (navigator.onLine) {
