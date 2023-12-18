@@ -12,14 +12,16 @@ import useGetUserPlaylists from "../../hooks/useGetUserPlaylists";
 import useTurnDocIdsIntoDocs from "../../hooks/useTurnDocIdsToDocs";
 import { Link } from "react-router-dom";
 import LoadingIcon from "../../components/loading_icon";
+import Checkout from "../../components/checkout";
 
 const Profile = () => {
     const [isAuth, setisAuth] = useState(false);
     const [currUser, setCurrUser] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     const [userPlaylists, loading, error] = useGetUserPlaylists();
 
-    const { customUser,setCustomUser } = useContext(Context);
+    const { customUser, setCustomUser } = useContext(Context);
 
     const nav = useNavigate();
 
@@ -63,6 +65,7 @@ const Profile = () => {
     return (<>
         {isAuth ?
             <div className={`${styles.body}`}>
+                {showPopup && <Checkout setShowPopup={setShowPopup} />}
                 <div className={`${styles.profilePart}`}>
                     <Link className={styles.avatar_container} to="/settings">
                         <img className={`${styles.avatar}`} src={customUser?.avatarUrl ?? "https://www.vippng.com/png/full/363-3631840_profile-icon-png-profile-icon-png-white-transparent.png"} alt="avatar" width='160px' height='160px' />
@@ -72,10 +75,11 @@ const Profile = () => {
                         <h2>{customUser.username}</h2>
                         <p>{`Created playlists: ${userPlaylists.length}`}</p>
                         <div className={`${styles.buttons}`}>
-                        <Button danger ghost onClick={signOut}>Sign Out</Button>
-                        <Link to="/settings"><Button edit ghost >Edit</Button></Link>
+                            <Button danger ghost onClick={signOut}>Sign Out</Button>
+                            <Link to="/settings"><Button edit ghost >Edit</Button></Link>
+                            {customUser?.subscription ? <p style={{color:"gold"}}>You are Premium User!</p> :<Button onClick={() => setShowPopup(!showPopup)}>Upgrade</Button>}
                         </div>
-                        
+
                     </div>
                 </div>
                 <div className={`${styles.playlists}`}>

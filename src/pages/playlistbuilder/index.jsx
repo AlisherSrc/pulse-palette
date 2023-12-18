@@ -71,6 +71,7 @@ const PlaylistBuilder = () => {
         if (!customUser.subscription && userPlaylists.length >= 5) {
             alert("You can have max 5 playlists. Please, upgrade to the Premium plan");
             nav('/');
+            return;
         }
 
         // For each song we have playlistID field which refers to the playlist they are in
