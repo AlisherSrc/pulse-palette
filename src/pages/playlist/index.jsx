@@ -10,7 +10,7 @@ import Song from '../../components/song';
 import useGetUserLikedDocs from '../../hooks/useGetUserLikedSongs';
 import ShareButton from '../../components/share_button';
 import LoadingIcon from '../../components/loading_icon';
-
+import { Helmet } from 'react-helmet';
 
 const Playlist = () => {
     const { id } = useParams();
@@ -66,13 +66,22 @@ const Playlist = () => {
 
     return (
         <>
+
+
             {loading ? (
                 <LoadingIcon />
             ) : (
+
                 <div className={styles.main}>
+                    <Helmet>
+                        <meta property="og:title" content={playlist.title} />
+                        <meta property="og:description" content={playlist.description} />
+                        <meta property="og:image" content={songs[0]?.image ?? "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
+                        <meta property="og:url" content={window.location.href} />
+                    </Helmet>
                     <div className={styles.playlistPart}>
                         <div className={`${styles.image_container}`}>
-                            <img src={songs[0]?.image ?? "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt="" className={styles.playlistImage} />
+                            <img src={songs[0]?.image ?? "https://images.unsplash.com/photo-1569513586164-80529357ad6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt="playlist image" className={styles.playlistImage} />
                         </div>
                         <div className={styles.playlistText}>
                             <h1>{playlist.title}</h1>

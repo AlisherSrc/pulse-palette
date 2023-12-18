@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIlB1bHNlUGFsZXR0ZSIsCiAgInNob3J0X25hbWUiOiAiUFBhbGV0dGUiLAogICJ0aGVtZV9jb2xvciI6ICIjNGM0YjE2IiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjODk4MTIxIiwKICAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJzY29wZSI6ICIuLyIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImFzc2V0cy9pY29ucy9pY29uLTcyeDcyLnBuZyIsCiAgICAgICJzaXplcyI6ICI3Mng3MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAgICJwdXJwb3NlIjogIm1hc2thYmxlIGFueSIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiYXNzZXRzL2ljb25zL2ljb24tOTZ4OTYucG5nIiwKICAgICAgInNpemVzIjogIjk2eDk2IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInB1cnBvc2UiOiAibWFza2FibGUgYW55IgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJhc3NldHMvaWNvbnMvaWNvbi0xMjh4MTI4LnBuZyIsCiAgICAgICJzaXplcyI6ICIxMjh4MTI4IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInB1cnBvc2UiOiAibWFza2FibGUgYW55IgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJhc3NldHMvaWNvbnMvaWNvbi0xNDR4MTQ0LnBuZyIsCiAgICAgICJzaXplcyI6ICIxNDR4MTQ0IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInB1cnBvc2UiOiAibWFza2FibGUgYW55IgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJhc3NldHMvaWNvbnMvaWNvbi0xNTJ4MTUyLnBuZyIsCiAgICAgICJzaXplcyI6ICIxNTJ4MTUyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInB1cnBvc2UiOiAibWFza2FibGUgYW55IgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJhc3NldHMvaWNvbnMvaWNvbi0xOTJ4MTkyLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInB1cnBvc2UiOiAibWFza2FibGUgYW55IgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJhc3NldHMvaWNvbnMvaWNvbi0zODR4Mzg0LnBuZyIsCiAgICAgICJzaXplcyI6ICIzODR4Mzg0IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInB1cnBvc2UiOiAibWFza2FibGUgYW55IgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJhc3NldHMvaWNvbnMvaWNvbi01MTJ4NTEyLnBuZyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgInB1cnBvc2UiOiAibWFza2FibGUgYW55IgogICAgfQogIF0KfQ==">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+    integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" type="image/x-icon" href="/assets/favicon-e3d6c28e.ico">
+  <title>PulsePalette</title>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=AWD0T1Zi_WuKdowqrxWROooNHp5YTG3_u8aC4gOtiEO1rAYnvHiYpFO59Tk5JvqCbB9icqfLPNxwOK8g&currency=USD"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/pwa.js', { scope: '/' })
+        .then((reg) => {
+          console.log("Service Worker is Registered")
+        });
+
+      navigator.serviceWorker.ready.then((reg) => {
+        console.log("Service Worker is Ready")
+      })
+    }
+  </script>
+  <script type="module" crossorigin src="/assets/index-ec4c6e1b.js"></script>
+  <link rel="stylesheet" href="/assets/index-79c7f36e.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  
+</body>
+
+</html>
