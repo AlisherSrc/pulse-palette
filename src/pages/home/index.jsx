@@ -37,8 +37,8 @@ const Home = () => {
             <div className={styles.home}>
     {playlists && playlists.length !== 0 ? (
         <>
-            <Group title="Latest" inputPlaylists={playlists} numShowed={4} />
-            <Group title="Popular" groupID="lci3fBjppIELL2Ttlnb2" numShowed={4} />
+            <Group title="Latest" inputPlaylists={playlists} numShowed={5} />
+            <Group title="Popular" groupID="lci3fBjppIELL2Ttlnb2" numShowed={5} />
         </>
     ) : (
         <div className={`${styles.loading_icon}`}>

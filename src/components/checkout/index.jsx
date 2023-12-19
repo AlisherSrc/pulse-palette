@@ -53,8 +53,8 @@ const Checkout = ({ setShowPopup }) => {
             const userRef = doc(db,'user',customUser.id);
 
             await updateDoc(userRef,{ subscription: true });
-    
-            console.log("Subscription has been changed!")
+            
+            location.reload();
         }catch(e){
             console.log(e);
         }

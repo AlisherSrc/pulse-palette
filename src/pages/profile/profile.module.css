@@ -28,8 +28,9 @@
 }
 .buttons{
   display: flex;
+  gap: 20px;
   position: absolute;
-  bottom: 0;
+  top: 85%;
   left: 0;
   width: auto;
 }

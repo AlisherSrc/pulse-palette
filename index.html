@@ -24,7 +24,7 @@
   <script src="https://www.paypal.com/sdk/js?client-id=AWD0T1Zi_WuKdowqrxWROooNHp5YTG3_u8aC4gOtiEO1rAYnvHiYpFO59Tk5JvqCbB9icqfLPNxwOK8g&currency=USD"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/pwa.js', { scope: '/' })
+      navigator.serviceWorker.register('./pwa.js', { scope: '/' })
         .then((reg) => {
           console.log("Service Worker is Registered")
         });
